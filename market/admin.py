@@ -13,12 +13,15 @@ admin.site.register(Book, BookAdmin)
 class ListingAdmin(admin.ModelAdmin):
     list_display = ('book','user','condition','price','comment','transaction')
 
+    list_filter = ['condition']
+
     fields = ['book','user','condition','price','comment','transaction']
+
 
 admin.site.register(Listing,ListingAdmin)
 
 class BookRequestAdmin(admin.ModelAdmin):
-    list_display = ('book','user','desired_condition','desired_price','comment', 'transaction')
+    list_display = ('book','user','desired_condition','desired_price', 'transaction','comment')
 
     fields = ['book','user','desired_condition','desired_price','comment', 'transaction']
 
