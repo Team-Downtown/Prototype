@@ -15,7 +15,7 @@ class Book(models.Model):
     """ Model representing a book (but not a specific copy of a book."""
     title = models.CharField(max_length=200)
 
-    author = models.ManyToManyField(Author,null=True)
+    author = models.ManyToManyField(Author)
 
     isbn = models.CharField('ISBN', primary_key=True, max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
 
