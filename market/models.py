@@ -1,6 +1,7 @@
 from django.db import models
 import uuid # Required for unique listing instances
 from django.contrib.auth import get_user_model
+import requests
 
 
 class Author(models.Model):
@@ -11,11 +12,12 @@ class Author(models.Model):
         """String for representing the Model object."""
         return self.name
 
+
 class Book(models.Model):
     """ Model representing a book (but not a specific copy of a book."""
     title = models.CharField(max_length=200)
 
-    author = models.ManyToManyField(Author,null=True)
+    author = models.ManyToManyField(Author)
 
     isbn = models.CharField('ISBN', primary_key=True, max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
 
@@ -37,6 +39,28 @@ class Book(models.Model):
         return ', '.join(author.name for author in self.author.all()[:3])
 
     display_author.short_description = 'Author'
+    
+    @classmethod
+    def add_if_not_present(cls, isbn):
+        if not Book.objects.filter(isbn=isbn).exists():
+            response = requests.get('https://www.googleapis.com/books/v1/volumes', params={'q': 'isbn:' + isbn})
+            if response.status_code == 200:
+                j = response.json()
+                if j['totalItems'] > 0:
+                    volumeInfo = j['items'][0]['volumeInfo']
+                    isbn = next(ident['identifier'] for ident in volumeInfo['industryIdentifiers'] if ident['type'] == 'ISBN_13')
+                    title = volumeInfo['title']
+                    published_date = volumeInfo['publishedDate']
+                    
+                    book = Book(isbn=isbn, title=title, published_date=published_date)
+                    book.save()
+                    
+                    for name in volumeInfo['authors']:
+                        author, _ = Author.objects.get_or_create(name=name)
+                        author.save()
+                        book.author.add(author)
+                        book.save()
+
 
 class Listing(models.Model):
 

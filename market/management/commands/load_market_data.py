@@ -10,24 +10,12 @@ from django.db.utils import IntegrityError
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-
         with open('books.csv') as csv_file:
-            csv_reader =csv.DictReader(csv_file)
+            csv_reader = csv.DictReader(csv_file)
             for row in csv_reader:
-
-                # create the author if it doesn't already exist
-                author_object, created = Author.objects.get_or_create(name=row["Author"].strip())
-
                 # create the book if it doesn't already exist
-                isbn = row["ISBN"]
-                try:
-                    book_object = Book.objects.create(isbn=row["ISBN"].strip(), title=row["Title"].strip(), publisher=row["Publisher"].strip(),
-                                                      published_date=row["Published_date"].strip())
-                    book_object.author.add(author_object)
-                    if created:
-                        print(f"Created book {isbn}")
-                except IntegrityError:
-                    print(f"Book {isbn} already exists!")
+                isbn = row["ISBN"].strip()
+                Book.add_if_not_present(isbn)
 
         # Create some test users
         users = []
@@ -59,6 +47,3 @@ class Command(BaseCommand):
                 book_request = BookRequest.objects.create(user=random.choice(users), book=book, desired_price=round(random.uniform(5.0,50.5), 1),
                                              desired_condition=random.choice(book_conditions),comment=random.choice(comments))
                 book_request.save()
-
-
-
