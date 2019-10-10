@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Textbook Marketplace</h1>
+  <p>The marketplace has the following record counts:</p>
+  <ul>
+    <li><strong>Books:</strong> {{ num_books }}</li>
+    <li><strong>Authors:</strong> {{ num_authors }}</li>
+    <li><strong>Listings:</strong> {{ num_listings }}</li>
+    <li><strong>BookRequests</strong> {{ num_requests }}</li>
+  </ul>
+{% endblock %}
