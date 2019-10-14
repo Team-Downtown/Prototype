@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Books for sale</h2>
+  {% if listing_list %}
+
+  <table>
+    <tr>
+      <th>Listing ID</th>
+      <th>Seller</th>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Condition</th>
+      <th>Comment</th>
+    </tr>
+    {% for listing in listing_list %}
+      <tr>
+        <td><a href="{% url 'listing-detail' listing.id %}">{{ listing.id }} </a> </td><td>{{ listing.user }} </td><td> {{ listing.book }}</td> <td>{{ listing.price }}</td> <td>{{ listing.get_condition_display }}</td> <td>{{ listing.comment }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+    <p>There are no listins in the market.</p>
+  {% endif %}
+{% endblock %}
