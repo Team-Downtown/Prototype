@@ -1,7 +1,6 @@
 from django.db import models
 import uuid # Required for unique listing instances
 from django.contrib.auth import get_user_model
-import requests
 
 
 class Author(models.Model):
