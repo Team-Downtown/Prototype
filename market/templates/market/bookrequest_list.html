@@ -13,7 +13,7 @@
     </tr>
     {% for bookrequest in bookrequest_list %}
       <tr>
-        <td>{{ bookrequest.id }}</td> <td>{{ bookrequest.book }}</td> <td>{{ bookrequest.desired_price }}</td> <td>{{ bookrequest.get_desired_condition_display }}</td>
+        <td><a href="{% url 'bookrequest-detail' bookrequest.id %}">{{ bookrequest.id }}</a></td> <td>{{ bookrequest.book }}</td> <td>{{ bookrequest.desired_price }}</td> <td>{{ bookrequest.get_desired_condition_display }}</td>
       </tr>
     {% endfor %}
   </table>

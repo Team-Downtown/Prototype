@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Book Request Info</h2>
+  <h3> Title: {{ bookrequest.book }}</h3>
+  {% if user.is_authenticated %}
+    <p> <strong> Requested By: {{ bookrequest.user }} - {{ bookrequest.user.email }}</strong></p></p>
+  {% endif %}
+  <p> <strong> Price: {{ bookrequest.desired_price }}</strong></p>
+  <p> <strong> Condition: {{ bookrequest.get_desired_condition_display }}</strong></p>
+  <p> <strong> Comment: {{ bookrequest.comment }}</strong></p>
+
+{% endblock %}

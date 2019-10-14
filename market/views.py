@@ -59,3 +59,6 @@ class RequestsByUserListView(LoginRequiredMixin, generic.ListView):
 
 class ListingDetailView(generic.DetailView):
     model = Listing
+
+class BookRequestDetailView(generic.DetailView):
+    model = BookRequest
