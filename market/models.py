@@ -124,4 +124,10 @@ class Transaction(models.Model):
     date_closed = models.DateField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
 
+# class UserMessage(models.Model):
+#
+#     sender = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='sender', null=False)
+#     receiver = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='receiver', null=False)
+#     date = models.DateField(auto_now_add=True)
+#     msg = models.TextField(max_length=200, blank=False)
 
