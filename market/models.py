@@ -26,6 +26,8 @@ class Book(models.Model):
     # do we want to store this as a DateField or a CharField??
     published_date = models.CharField('Published Date', max_length=20, null=True, blank=True)
 
+    cover_image = models.URLField(max_length=250, null=True)
+
     def __str__(self):
         """"String for representing the Model object."""
         return self.title
@@ -51,8 +53,14 @@ class Book(models.Model):
                     isbn = next(ident['identifier'] for ident in volumeInfo['industryIdentifiers'] if ident['type'] == 'ISBN_13')
                     title = volumeInfo['title']
                     published_date = volumeInfo['publishedDate']
-                    
-                    book = Book(isbn=isbn, title=title, published_date=published_date)
+                    thumbnail_link=""
+                    try:
+                        image_links = volumeInfo['imageLinks']
+                        thumbnail_link = image_links['thumbnail']
+                    except KeyError:
+                        # for debug purposes right now. Probably should remove.
+                        print("imageLinks key not found")
+                    book = Book(isbn=isbn, title=title, published_date=published_date, cover_image=thumbnail_link)
                     book.save()
                     
                     for name in volumeInfo['authors']:
@@ -62,26 +70,7 @@ class Book(models.Model):
                         book.save()
 
 
-    @classmethod
-    def add_if_not_present(cls, isbn):
-        if not Book.objects.filter(isbn=isbn).exists():
-            response = requests.get('https://www.googleapis.com/books/v1/volumes', params={'q': 'isbn:' + isbn})
-            if response.status_code == 200:
-                j = response.json()
-                if j['totalItems'] > 0:
-                    volumeInfo = j['items'][0]['volumeInfo']
-                    isbn = next(ident['identifier'] for ident in volumeInfo['industryIdentifiers'] if ident['type'] == 'ISBN_13')
-                    title = volumeInfo['title']
-                    published_date = volumeInfo['publishedDate']
 
-                    book = Book(isbn=isbn, title=title, published_date=published_date)
-                    book.save()
-
-                    for name in volumeInfo['authors']:
-                        author, _ = Author.objects.get_or_create(name=name)
-                        author.save()
-                        book.author.add(author)
-                        book.save()
 
 
 class Listing(models.Model):
