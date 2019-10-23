@@ -87,7 +87,7 @@ class Listing(models.Model):
         ('F', 'Fair'),
         ('P', 'Poor'),
     )
-
+    
     condition = models.CharField(
         max_length=2,
         choices=BOOK_STATUS,
