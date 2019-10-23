@@ -33,6 +33,11 @@ urlpatterns += [
     path('', RedirectView.as_view(url='/marketplace/', permanent=True)),
 ]
 
+urlpatterns += [
+    path('users/', include('users.urls')),
+    path('users/',include('django.contrib.auth.urls'))
+]
+
 # Use static() to add url mapping to serve static files during development (only)
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

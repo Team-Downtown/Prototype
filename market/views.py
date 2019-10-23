@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -38,9 +39,37 @@ class AuthorListView(generic.ListView):
 
 class ListingListView(generic.ListView):
     model = Listing
+    paginate_by = 10
 
 
 class BookRequestListView(generic.ListView):
+    model = BookRequest
+    paginate_by = 10
+
+
+class ListingsByUserListView(LoginRequiredMixin, generic.ListView):
+    model = Listing
+    template_name = 'market/listings_by_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Listing.objects.filter(user = self.request.user)
+
+
+class RequestsByUserListView(LoginRequiredMixin, generic.ListView):
+    model = BookRequest
+    template_name = 'market/requests_by_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookRequest.objects.filter(user = self.request.user)
+
+
+class ListingDetailView(generic.DetailView):
+    model = Listing
+
+
+class BookRequestDetailView(generic.DetailView):
     model = BookRequest
 
 
@@ -79,6 +108,7 @@ def add_listing(request, isbn):
         'add_listing_form': form,
     }
     return render(request, 'market/add_listing.html', context)
+
 
 def add_request_check(request):
     if request.method == 'POST':
