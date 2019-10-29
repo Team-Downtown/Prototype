@@ -9,5 +9,8 @@
   <p> <strong> Price: {{ listing.price }}</strong></p>
   <p> <strong> Condition: {{ listing.get_condition_display }}</strong></p>
   <p> <strong> Comment: {{ listing.comment }}</strong></p>
-
+  <p></p>
+  {% if user.is_authenticated %}
+    <p> <a href="{% url 'contact-lister' listing.id %}">Contact {{ listing.user }} about this listing</a></p>
+  {% endif %}
 {% endblock %}

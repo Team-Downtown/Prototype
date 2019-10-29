@@ -1,5 +1,5 @@
 from django.contrib import admin
-from market.models import Book, Author, Listing, BookRequest, Transaction
+from market.models import Book, Author, Listing, BookRequest, Transaction, UserMessage
 
 admin.site.register(Author)
 
@@ -33,3 +33,9 @@ class TransactionAdmin(admin.ModelAdmin):
     fields = ['book','seller','buyer','date_closed','price']
 
 admin.site.register(Transaction, TransactionAdmin)
+
+class UserMessageAdmin(admin.ModelAdmin):
+    list_display = ('sender','receiver','date','msg', 'listing_id', 'request_id')
+    fields = ['sender','receiver','date','msg', 'listing_id', 'request_id']
+
+admin.site.register(UserMessage, UserMessageAdmin)

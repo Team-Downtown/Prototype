@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>User Messages</h1>
+  {% if usermessage_list %}
+
+  <table>
+    <tr>
+      <th>Message ID</th>
+      <th>Parent Message ID</th>
+      <th>Receiver</th>
+      <th>Sender</th>
+      <th>Date</th>
+      <th>Message</th>
+    </tr>
+    {% for message in usermessage_list %}
+      <tr>
+        <td><a href="{% url 'usermessage-detail' message.id %}">{{ message.id }}</a> </td><td> {{ message.parent_id.id }}</td><td> {{ message.receiver }}</td> <td>{{ message.sender }}</td> <td>{{ message.date}}</td> <td>{{ message.msg }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+    <p>There are no messages for this user</p>
+  {% endif %}
+{% endblock %}

@@ -15,4 +15,9 @@ urlpatterns = [
     path('bookrequests/add/<str:isbn>/', views.add_request, name='add-request'),
     path('mylistings/',views.ListingsByUserListView.as_view(), name='my-listings'),
     path('myrequests/',views.RequestsByUserListView.as_view(), name='my-requests'),
+    path('mymessages/',views.UserMessagesByUserListView.as_view(), name='my-user-messages'),
+    path('mymessages/<int:pk>',views.UserMessageDetailView.as_view(), name='usermessage-detail'),
+    path('listings/contact/<int:id>', views.contact_lister, name='contact-lister'),
+    path('bookrequests/contact/<int:id>', views.contact_requester, name='contact-requester'),
+    path('mymessages/respond/<int:id>',views.respond_to_message, name='respond-to-message')
 ]

@@ -30,3 +30,14 @@ class AddRequestForm(CheckISBNForm):
         error_messages={'required': 'You must enter a condition'})
     
     comments = forms.CharField(empty_value='Additional comments (optional)', required=False, strip=True)
+
+class ContactForm(forms.Form):
+
+    # listing_id = forms.IntegerField(       # A hidden input for internal use
+    #     widget=forms.HiddenInput(),
+    #     initial = 1
+    # )
+    msg = forms.CharField(required = True,
+                                   widget = forms.Textarea
+                                   )
+
