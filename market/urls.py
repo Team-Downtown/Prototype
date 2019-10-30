@@ -15,4 +15,7 @@ urlpatterns = [
     path('bookrequests/add/<str:isbn>/', views.add_request, name='add-request'),
     path('mylistings/',views.ListingsByUserListView.as_view(), name='my-listings'),
     path('myrequests/',views.RequestsByUserListView.as_view(), name='my-requests'),
+    path('listingsearch/',views.ListingSearchResultView.as_view(), name='listing_searchresults'),
+    path('requestsearch/',views.BookRequestSearchResultView.as_view(), name='request_searchresults'),
+    path('search/',views.SearchView.as_view(), name='search'),
 ]

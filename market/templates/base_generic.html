@@ -29,6 +29,7 @@
           <li><a href="{% url 'authors' %}">All authors</a></li>
           <li><a href="{% url 'listings' %}">All Listings</a></li>
           <li><a href="{% url 'bookrequests' %}">All Book Requests</a></li>
+          <li><a href="{% url 'search' %}">Search</a></li>
         </ul>
         {% if user.is_authenticated %}
           Hi {{ user.username }}!

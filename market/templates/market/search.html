@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Looking to Buy?</h2>
+    <body>Search for a Listing, By Title Includes... or 13 number ISBN*.</body>
+  <form action="{% url 'listing_searchresults' %}" method="get">
+    <input name="q" type="text" placeholder="e.g. 9781319106317">
+    <input type="submit" value="OK">
+
+  </form>
+
+  <h1>Looking to Sell?</h1>
+    <body>Search for a Book Request, By Title Includes... or 13 number ISBN*.</body>
+  <form action="{% url 'request_searchresults' %}" method="get">
+    <input name="q" type="text" placeholder="e.g. Chemistry">
+    <input type="submit" value="OK">
+
+  </form>
+
+  <br><strong>*Note:</strong>
+  Searches by Title Includes will return all editions of the book, <br>
+  and so if the edition is important, it is recommended that you search by ISBN
+  {% endblock %}
