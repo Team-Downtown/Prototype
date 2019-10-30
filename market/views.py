@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
+from django.db.models import Q
 
 from . forms import CheckISBNForm, AddListingForm, AddRequestForm
 from . models import Book, Author, Listing, BookRequest
@@ -64,6 +65,26 @@ class RequestsByUserListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return BookRequest.objects.filter(user = self.request.user)
 
+class SearchView(generic.TemplateView):
+    template_name = 'market/search.html'
+
+class ListingSearchResultView(generic.ListView):
+    model = Listing
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Listing.objects.filter\
+            ( Q(book__title__icontains=query) | Q(book__isbn__icontains=query) )
+        return object_list
+
+class BookRequestSearchResultView(generic.ListView):
+    model = BookRequest
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = BookRequest.objects.filter\
+            ( Q(book__title__icontains=query) | Q(book__isbn__icontains=query) )
+        return object_list
 
 class ListingDetailView(generic.DetailView):
     model = Listing
