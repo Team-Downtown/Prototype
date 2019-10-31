@@ -1,10 +1,30 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Textbook Marketplace Sign Up</h1>
-  <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Sign Up</button>
+<div class="signup-container">
+<img src="https://i.ibb.co/Yk8X0ht/sign-up.jpg">
+ <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p style="font-size: 30px;">
+        {{ field.label_tag }}<br>
+		
+        {{ field }}
+		</br>
+        {% if field.help_text %}
+          <small style="color: #454a4b; font-size:20px;">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit" style="font-size:40px; margin-bottom: 40px;">Sign up</button>
+	
   </form>
+  </div>
 {% endblock %}
+
+
+
+
