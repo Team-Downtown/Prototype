@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
+from django.db.models import Q
 
 from . forms import CheckISBNForm, AddListingForm, AddRequestForm, ContactForm
 from . models import Book, Author, Listing, BookRequest, UserMessage
@@ -40,11 +41,13 @@ class AuthorListView(generic.ListView):
 class ListingListView(generic.ListView):
     model = Listing
     paginate_by = 10
+    ordering = ['book__title']
 
 
 class BookRequestListView(generic.ListView):
     model = BookRequest
     paginate_by = 10
+    ordering = ['book__title']
 
 
 class ListingsByUserListView(LoginRequiredMixin, generic.ListView):
@@ -70,7 +73,7 @@ class UserMessagesByUserListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return UserMessage.objects.filter(receiver = self.request.user)
+        return UserMessage.objects.filter(Q(receiver = self.request.user)|Q(sender = self.request.user))
       #  return UserMessage.objects.all()
 
 
@@ -86,11 +89,17 @@ class UserMessageDetailView(LoginRequiredMixin,generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        msg_context = 'this is a test'
         if (self.object.listing_id!=None):
             context['msg_context'] = "Listing ID "+str(self.object.listing_id.id)+" - "+self.object.listing_id.book.title
         elif (self.object.request_id!=None):
             context['msg_context'] = "Request ID "+str(self.object.request_id.id)+" - "+self.object.request_id.book.title
+        # Possibly decrement unread messages count here??
+        if self.object.read_flag == False:
+            if self.object.receiver.unreadMessages!=0:
+                self.object.receiver.unreadMessages-=1
+                self.object.receiver.save()
+            self.object.read_flag = True
+            self.object.save()
         return context
 
 
@@ -186,6 +195,9 @@ def contact_lister(request, id):
             msg = form.cleaned_data['msg']
             usermsg = UserMessage(sender=request.user, receiver = listing.user,msg=msg,listing_id=listing)
             usermsg.save()
+            # Possibly increment unread message count here? Need to worry about race conditions?
+            listing.user.unreadMessages+=1
+            listing.user.save()
             return HttpResponseRedirect('/')
 
     else:
@@ -205,6 +217,8 @@ def contact_requester(request, id):
             msg = form.cleaned_data['msg']
             usermsg = UserMessage(sender=request.user, receiver = bookrequest.user,msg=msg,request_id=bookrequest)
             usermsg.save()
+            bookrequest.user.unreadMessages+=1
+            bookrequest.user.save()
             return HttpResponseRedirect('/')
 
     else:
