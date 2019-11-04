@@ -239,6 +239,9 @@ def respond_to_message(request, id):
             usermsg = UserMessage(sender=usermessage.receiver, receiver =usermessage.sender,msg=msg,listing_id=usermessage.listing_id,
                                   parent_id = usermessage)
             usermsg.save()
+            # Need to increment unread count
+            usermessage.sender.unreadMessages+=1
+            usermessage.sender.save()
             return HttpResponseRedirect('/')
 
     else:

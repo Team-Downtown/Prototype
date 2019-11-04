@@ -13,4 +13,3 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = MarketUser
         fields = UserCreationForm.Meta.fields + ('phoneNumber','image','bio')
-.
