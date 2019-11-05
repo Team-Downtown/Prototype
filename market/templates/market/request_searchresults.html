@@ -3,22 +3,19 @@
 {% block content %}
   <h1>Book Request List</h1>
   {% if bookrequest_list %}
-  <div id="bookRequestTable">		
-	
+
   <table>
     <tr>
-      <th>Request ID</th>
       <th>Title</th>
       <th>Desired Price</th>
       <th>Desired Condition</th>
     </tr>
     {% for bookrequest in bookrequest_list %}
       <tr>
-        <td><a href="{% url 'bookrequest-detail' bookrequest.id %}">{{ bookrequest.id }}</a></td> <td>{{ bookrequest.book }}</td> <td>{{ bookrequest.desired_price }}</td> <td>{{ bookrequest.get_desired_condition_display }}</td>
+        <td>{{ bookrequest.book }}</td> <td>{{ bookrequest.desired_price }}</td> <td>{{ bookrequest.get_desired_condition_display }}</td>
       </tr>
     {% endfor %}
   </table>
-  </div>
   {% else %}
     <p>There are no book requests in the market.</p>
   {% endif %}

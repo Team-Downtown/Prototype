@@ -20,4 +20,7 @@ urlpatterns = [
     path('listings/contact/<int:id>', views.contact_lister, name='contact-lister'),
     path('bookrequests/contact/<int:id>', views.contact_requester, name='contact-requester'),
     path('mymessages/respond/<int:id>',views.respond_to_message, name='respond-to-message')
+    path('listingsearch/',views.ListingSearchResultView.as_view(), name='listing_searchresults'),
+    path('requestsearch/',views.BookRequestSearchResultView.as_view(), name='request_searchresults'),
+    path('search/',views.SearchView.as_view(), name='search'),
 ]

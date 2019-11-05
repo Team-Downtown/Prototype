@@ -5,9 +5,27 @@
   {% if book_list %}
   <ul>
     {% for book in book_list %}
-      <li>
-        <img src={{ book.cover_image }}> </img> {{ book.title }} ({{book.isbn}})
+	  <div class="Book">
+		<li>
+		<div class="book-cover">
+        <img src={{ book.cover_image }}> </img> 
+		</div>
+		<div class="Book-info">
+		
+			<div class="book-title">
+              <p class="bold-text"> Book Title: </p> <p>{{ book.title }}</p>
+              </div>
+
+              <div class="book-ISBN">
+              <p class="bold-text">ISBN: </p> <p> {{book.isbn}} </p>
+              </div>
+
+
+
+
+        </div>
       </li>
+    </div>
     {% endfor %}
   </ul>
   {% else %}
