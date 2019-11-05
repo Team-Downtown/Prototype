@@ -3,7 +3,8 @@
 {% block content %}
   <h1>Book Request List</h1>
   {% if bookrequest_list %}
-
+  <div id="bookRequestTable">		
+	
   <table>
     <tr>
       <th>Request ID</th>
@@ -17,6 +18,7 @@
       </tr>
     {% endfor %}
   </table>
+  </div>
   {% else %}
     <p>There are no book requests in the market.</p>
   {% endif %}
