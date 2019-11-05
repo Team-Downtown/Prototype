@@ -9,5 +9,7 @@
   <p> <strong> Price: {{ bookrequest.desired_price }}</strong></p>
   <p> <strong> Condition: {{ bookrequest.get_desired_condition_display }}</strong></p>
   <p> <strong> Comment: {{ bookrequest.comment }}</strong></p>
-
+{% if user.is_authenticated %}
+    <p> <a href="{% url 'contact-requester' bookrequest.id %}">Contact {{ bookrequest.user }} about this listing</a></p>
+  {% endif %}
 {% endblock %}

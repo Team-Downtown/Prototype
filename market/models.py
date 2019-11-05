@@ -133,13 +133,18 @@ class Transaction(models.Model):
     book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
     seller = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='seller', null=True)
     buyer = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='buyer', null=True)
-    date_closed = models.DateField()
+    date_closed = models.DateTimeField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
 
-# class UserMessage(models.Model):
-#
-#     sender = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='sender', null=False)
-#     receiver = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='receiver', null=False)
-#     date = models.DateField(auto_now_add=True)
-#     msg = models.TextField(max_length=200, blank=False)
+class UserMessage(models.Model):
+
+    sender = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='sender', null=True)
+    receiver = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='receiver', null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    #date = models.DateField(auto_now_add=True)
+    msg = models.TextField(max_length=200, blank=False)
+    listing_id = models.ForeignKey('Listing', on_delete=models.SET_NULL, null=True, blank=True)
+    request_id = models.ForeignKey('BookRequest', on_delete=models.SET_NULL, null=True, blank=True)
+    parent_id = models.ForeignKey('self',on_delete=models.SET_NULL, null=True,related_name='parent')
+    read_flag = models.BooleanField(default = False)
 
