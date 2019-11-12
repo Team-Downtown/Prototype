@@ -23,4 +23,9 @@ urlpatterns = [
     path('listingsearch/',views.ListingSearchResultView.as_view(), name='listing_searchresults'),
     path('requestsearch/',views.BookRequestSearchResultView.as_view(), name='request_searchresults'),
     path('search/',views.SearchView.as_view(), name='search'),
+    path('listings/filter/<str:isbn>',views.getListingsByBook, name='listings-by-book'),
+    path('bookrequests/filter/<str:isbn>',views.getBookRequestsByBook, name='bookrequests-by-book'),
+    path('mylistings/update/<int:pk>',views.ListingUpdate.as_view(), name='update-listing'),
+    path('mylistings/transaction/<int:id>',views.create_listing_transaction, name='create-listing-transaction'),
+    path('myrequests/transaction/<int:id>',views.create_bookrequest_transaction, name='create-request-transaction'),
 ]

@@ -10,7 +10,13 @@
   <p> <strong> Condition: {{ listing.get_condition_display }}</strong></p>
   <p> <strong> Comment: {{ listing.comment }}</strong></p>
   <p></p>
-  {% if user.is_authenticated %}
-    <p> <a href="{% url 'contact-lister' listing.id %}">Contact {{ listing.user }} about this listing</a></p>
-  {% endif %}
+   {% ifequal user listing.user %}
+    <p> <a href="{% url 'update-listing' listing.id %}">Update  this listing</a></p>
+    <p> <a href="{% url 'create-listing-transaction' listing.id %}">Create transaction</a></p>
+
+  {% else %}
+    {% if user.is_authenticated %}
+      <p> <a href="{% url 'contact-lister' listing.id %}">Contact {{ listing.user }} about this listing</a></p>
+    {% endif %}
+  {% endifequal %}
 {% endblock %}

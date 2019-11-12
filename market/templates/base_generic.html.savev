@@ -9,12 +9,6 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <style>
-  
-
-  
-  
-  
-  
   table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -58,23 +52,14 @@
 }
 
 .side-bar {
-	
     margin-left: 2%;
     margin-top: 0.8%;
-	margin-right: 30%;
     position: absolute;
     width: 12%;
     height: 100%;
     border: 2px solid black;
     background-color: #11C3FF;
     font-size: 25px;
-	overflow:auto;
-
-}
-
-.side-bar ul{ 
-
-font-size: 1.5vw;"
 
 }
 
@@ -86,16 +71,13 @@ font-size: 1.5vw;"
 
 
 .container {
-	margin-left:20%;
-	float:center;
-	position:absolute;
-	width: 60%;
 	margin-top: 1%;
 	text-align:center;
-    overflow: auto;
+    margin-left: auto;
+	margin-right: auto;
+    overflow: hidden;
 	border: solid #11C3FF 2px;
     padding:0;
-	
 
 }
 
@@ -206,7 +188,6 @@ padding-left:17%;
 }
 
   </style>
-
 </head>
 <body>
 <div class="entire">
@@ -283,7 +264,5 @@ padding-left:17%;
       </div>
     </div>
   </div>
-{% block jquery %} {% endblock %}
 </body>
-
 </html>
