@@ -6,7 +6,7 @@
  <form method="post">
     {% csrf_token %}
     {% for field in form %}
-      <p style="font-size: 30px;">
+      <p style="font-size: 20px;">
         {{ field.label_tag }}<br>
 		
         {{ field }}
@@ -19,7 +19,7 @@
         {% endfor %}
       </p>
     {% endfor %}
-    <button type="submit" style="font-size:40px; margin-bottom: 40px;">Sign up</button>
+    <button type="submit" style="font-size:25px; margin-bottom: 40px;">Sign up</button>
 	
   </form>
   </div>

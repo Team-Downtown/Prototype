@@ -7,14 +7,14 @@
 	
   <table>
     <tr>
-      <th>Request ID</th>
+      <th>Requested By</th>
       <th>Title</th>
       <th>Desired Price</th>
       <th>Desired Condition</th>
     </tr>
     {% for bookrequest in bookrequest_list %}
       <tr>
-        <td><a href="{% url 'bookrequest-detail' bookrequest.id %}">{{ bookrequest.id }}</a></td> <td>{{ bookrequest.book }}</td> <td>{{ bookrequest.desired_price }}</td> <td>{{ bookrequest.get_desired_condition_display }}</td>
+        <td><a href="{% url 'bookrequest-detail' bookrequest.id %}">{{ bookrequest.user }}</a></td> <td>{{ bookrequest.book }}</td> <td>{{ bookrequest.desired_price }}</td> <td>{{ bookrequest.get_desired_condition_display }}</td>
       </tr>
     {% endfor %}
   </table>

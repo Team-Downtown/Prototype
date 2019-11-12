@@ -44,6 +44,8 @@ class ListingListView(generic.ListView):
     ordering = ['book__title']
 
 
+
+
 class BookRequestListView(generic.ListView):
     model = BookRequest
     paginate_by = 10
@@ -269,3 +271,11 @@ def respond_to_message(request, id):
 
     return render(request,'market/respond_to_message.html', {
         'form':form, 'usermessage':usermessage})
+
+def getListingsByBook(request, isbn):
+    books = Listing.objects.filter(book = isbn)
+    return render(request,'market/listing_list.html', {'listing_list':books})
+
+def getBookRequestsByBook(request, isbn):
+    books = BookRequest.objects.filter(book = isbn)
+    return render(request,'market/bookrequest_list.html', {'bookrequest_list':books})

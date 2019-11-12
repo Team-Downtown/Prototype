@@ -1,6 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+<div class="search-border">
 <h1>Looking to Buy?</h2>
     <body>Search for a Listing, By Title Includes... or 13 number ISBN*.</body>
   <form action="{% url 'listing_searchresults' %}" method="get">
@@ -8,6 +9,8 @@
     <input type="submit" value="OK">
 
   </form>
+  
+  </div>
 
   <h1>Looking to Sell?</h1>
     <body>Search for a Book Request, By Title Includes... or 13 number ISBN*.</body>

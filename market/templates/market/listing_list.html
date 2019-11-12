@@ -3,10 +3,9 @@
 {% block content %}
   <h1>Books for sale</h1>
   {% if listing_list %}
-
+	<div class ="listing-count-table">
   <table>
     <tr>
-      <th>Listing ID</th>
       <th>Seller</th>
       <th>Title</th>
       <th>Price</th>
@@ -15,10 +14,11 @@
     </tr>
     {% for listing in listing_list %}
       <tr>
-        <td><a href="{% url 'listing-detail' listing.id %}">{{ listing.id }} </a> </td><td>{{ listing.user }} </td><td> {{ listing.book }}</td> <td>{{ listing.price }}</td> <td>{{ listing.get_condition_display }}</td> <td>{{ listing.comment }}</td>
+        <td><a href="{% url 'listing-detail' listing.id %}"> {{ listing.user }} </a>  </td><td> {{ listing.book }}</td> <td>{{ listing.price }}</td> <td>{{ listing.get_condition_display }}</td> <td id ="listing-comment">{{ listing.comment }}</td>
       </tr>
     {% endfor %}
   </table>
+  </div>
   {% else %}
     <p>There are no listings in the market.</p>
   {% endif %}

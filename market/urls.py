@@ -2,7 +2,7 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.index, name='index'), 
     path('books/',views.BookListView.as_view(), name='books'),
     path('authors/',views.AuthorListView.as_view(), name='authors'),
     path('listings/',views.ListingListView.as_view(), name='listings'),
@@ -19,8 +19,10 @@ urlpatterns = [
     path('mymessages/<int:pk>',views.UserMessageDetailView.as_view(), name='usermessage-detail'),
     path('listings/contact/<int:id>', views.contact_lister, name='contact-lister'),
     path('bookrequests/contact/<int:id>', views.contact_requester, name='contact-requester'),
-    path('mymessages/respond/<int:id>',views.respond_to_message, name='respond-to-message')
+    path('mymessages/respond/<int:id>',views.respond_to_message, name='respond-to-message'),
     path('listingsearch/',views.ListingSearchResultView.as_view(), name='listing_searchresults'),
     path('requestsearch/',views.BookRequestSearchResultView.as_view(), name='request_searchresults'),
     path('search/',views.SearchView.as_view(), name='search'),
+    path('listings/filter/<str:isbn>',views.getListingsByBook, name='listings-by-book'),
+    path('bookrequests/filter/<str:isbn>',views.getBookRequestsByBook, name='bookrequests-by-book'),
 ]

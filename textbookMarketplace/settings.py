@@ -83,10 +83,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'marketplace',
-        'USER': 'dbuser',
-        'PASSWORD': 'password',
+        'USER': 'jocamposgarcia',
+        'PASSWORD': '0353622852',
         'HOST': 'localhost',
         'PORT': '3306',
+		'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
