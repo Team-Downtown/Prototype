@@ -83,8 +83,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'marketplace',
-        'USER': 'jocamposgarcia',
-        'PASSWORD': '0353622852',
+        'USER': 'dbuser',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '3306',
 		'OPTIONS': {
