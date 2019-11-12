@@ -10,14 +10,27 @@
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <style>
   
-
+    
+   #listing-comment {
+   
+   padding:0;
+   
+}
+  
+  
+	.listing-count-table table th, td{
+	
+	padding:20px;
+	
+	
+	
+	}
   
   
   
   
   table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+  
   }
   th, td {
     padding: 15px;
@@ -63,18 +76,20 @@
     margin-top: 0.8%;
 	margin-right: 30%;
     position: absolute;
-    width: 12%;
+    width: 15%;
     height: 100%;
     border: 2px solid black;
     background-color: #11C3FF;
     font-size: 25px;
 	overflow:auto;
 
+
 }
 
 .side-bar ul{ 
 
 font-size: 1.5vw;"
+
 
 }
 
@@ -85,7 +100,10 @@ font-size: 1.5vw;"
 
 
 
+
+
 .container {
+
 	margin-left:20%;
 	float:center;
 	position:absolute;
@@ -94,6 +112,16 @@ font-size: 1.5vw;"
 	text-align:center;
     overflow: auto;
 	border: solid #11C3FF 2px;
+=======
+	margin-left:25%;
+	float:center;
+	position:absolute;
+	width: 50%;
+	margin-top: 1%;
+	text-align:center;
+    overflow: auto;
+	border: solid black 2px;
+
     padding:0;
 	
 
@@ -132,7 +160,9 @@ list-style-type: none;
 
     padding-bottom: 5px;
     margin-bottom: 2%;
-    border-bottom: 1px solid black;
+	border-bottom: solid gray 1px;
+	text-align:center;
+	
 
 
 }
@@ -142,11 +172,13 @@ list-style-type: none;
 }
 
 .book-title P {
-    display: inline;
+    margin:0;
+	padding:0;
 }
 
 .book-ISBN p {
-    display: inline;
+    margin:0;
+	padding:0;
 }
 
 .bold-text {
@@ -155,8 +187,7 @@ font-weight: bold;
 .Book-info {
 
 
-    text-align: left;
-    padding-left: 44%;
+    text-align:center;
 
 }
 
@@ -205,6 +236,45 @@ padding-left:17%;
 
 }
 
+
+
+
+.pagination  {
+font-size:30px;
+float:right;
+
+}
+
+.user  {
+text-align:center;
+font-size:1.4vw;
+text-align:left;
+
+}
+
+
+.search-border {
+padding-bottom: 7%;
+border-bottom: 1px solid black;
+margin-bottom: 5%;
+
+
+
+
+}
+
+
+.user-message {
+
+font-size: 12px;
+
+
+}
+
+
+
+
+
   </style>
 
 </head>
@@ -225,9 +295,10 @@ padding-left:17%;
         <ul>
             <li><a href="{% url 'index' %}"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAACfElEQVRoge3Zz4tNYRzH8RdjygySkF8lRWbBijJKY8NSKM0s5S8Y1CwUCzu2llJMTZkiISwkMZY2FphiQdHEJBElPzLX4nlu91zNmHPuPXfmjM67ns7p3Of7fT6f85znxzmX1rIOd3Arns9JduMdKrF8wN5ZVZSReRjAL8HAk1gq8dpArFNoFuOKWi8MoRMLcSFx/SaWzpLGaenCM0HodxydpM5hfIt1XmDrjKlLSR++CgLfoPsfdbtjnUqM6U38dgz3Jikn8pdczwKcxUQU9hCrUsQtx121R+082uOxMkkZyll3HasxEhuawBm0ZYhvizHVmzCCG/F8WOipQS02sgtjsZEvONRErn34pL4HTsbfjktpZH4DDffjAdYKg3s7rjWQp8pt7Ii5qmxoIt+0dOCS2l27jEU55l+Ii4n8wzgl50drM57GpD+FXmkV/bGNSuKYi5GD+BwTjgnjo9Ukx2BFWGQbpg2n8Tsme4Q1zenLxEphDanOiueE6T4TK0w+z880bRpbp8A2vFZbefvy15eZ/WqP91vsnC7g773Qllaqy0hywplqL6dDbRWtCOvCkpnRl4klgraqzkFBO1iPx+pX1p4Zl5ieHvVan2AjvIwX3uOjuWPko6C5gtH5wjv1DWGQj8+avOyMC5qvCx7qGDV3emQ0ebGRTWMhKY0Ujf/GSOZN2BTswdUGY3txv1kBeRlpx7ImYpsmLyNVnuFAyro35fhdK28jP/AqQ93c+G8Ge2mkaJRGikZppGiURopGaaRolEaKRmmkaEz1PtIlfMxOy6Z47BT+U0xDZyI2bQxB27RUP9DNhfI8KfzvHhnGkTSOC8Dl2RZQ8i/+AGI62GhY3QMlAAAAAElFTkSuQmCC"></a></li>
             <li><a href="#"><img src="data:image/png;base64,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"></a></li>
-            <li><a href="{% url 'listings' %}"><img src="https://img.icons8.com/ios-filled/50/000000/search.png"></a></li>
+            <li><a href="{% url 'search' %}"><img src="https://img.icons8.com/ios-filled/50/000000/search.png"></a></li>
 
         </ul>
+		
         </div>
 
 
@@ -238,18 +309,21 @@ padding-left:17%;
 	
       {% block sidebar %}
         <ul class="sidebar-nav">
-          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'index' %}">Home</a></li> 
           <li><a href="{% url 'books' %}">All books</a></li>
           <li><a href="{% url 'authors' %}">All authors</a></li>
           <li><a href="{% url 'listings' %}">All Listings</a></li>
           <li><a href="{% url 'bookrequests' %}">All Book Requests</a></li>
-          <li><a href="{% url 'search' %}">Search</a></li>
         </ul>
-        {% if user.is_authenticated %}
-          Hi {{ user.username }}!
+        
+		<!-- here -->
+		{% if user.is_authenticated %}
+          <div class ="user">Hi {{ user.username }}!
           <ul>
             <li><a href="{% url 'my-listings' %}">My Listings</a></li>
+			<li><a href="{% url 'add-listing-check' %}"> Add Listings</a></li>
             <li><a href="{% url 'my-requests' %}">My Requests</a></li>
+			<li><a href="{% url 'add-request-check' %}">Add a request</a></li>
             <li><a href="{% url 'my-user-messages' %}">My Messages - {{ user.unreadMessages}} New</a></li>
           </ul>
           <p><a href="{% url 'logout' %}">Logout</a></p>
@@ -258,12 +332,19 @@ padding-left:17%;
             <a href="{% url 'login' %}">Login</a>
         {% endif %}
       {% endblock %}
+	  </div>
+	  
+		
+		
 	        </div>
 			
 
-      <div class="container">{% block content %}{% endblock %} </div>
+      <div class="container">
+	  
+	  
+	  {% block content %}{% endblock %}
 
-      {% block pagination %}
+		{% block pagination %}
         {% if is_paginated %}
           <div class="pagination">
             <span class="page-links">
@@ -280,6 +361,13 @@ padding-left:17%;
           </div>
         {% endif %}
       {% endblock %}
+
+	  </div>
+
+      <!-- HERE-->
+	  
+	  
+	  
       </div>
     </div>
   </div>

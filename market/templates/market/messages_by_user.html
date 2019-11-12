@@ -3,7 +3,7 @@
 {% block content %}
   <h1>User Messages</h1>
   {% if usermessage_list %}
-
+	<div class ="user-message">
   <table>
     <tr>
       <th>Message ID</th>
@@ -22,4 +22,6 @@
   {% else %}
     <p>There are no messages for this user</p>
   {% endif %}
+  </div>
+  
 {% endblock %}

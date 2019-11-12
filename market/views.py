@@ -47,6 +47,8 @@ class ListingListView(generic.ListView):
         return Listing.objects.filter(transaction = None)
 
 
+
+
 class BookRequestListView(generic.ListView):
     model = BookRequest
     paginate_by = 10
