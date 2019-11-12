@@ -1,12 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from django.db.models import Q
 
-from . forms import CheckISBNForm, AddListingForm, AddRequestForm, ContactForm
-from . models import Book, Author, Listing, BookRequest, UserMessage
+from . forms import CheckISBNForm, AddListingForm, AddRequestForm, ContactForm, TransactionListingForm, TransactionBookRequestForm
+from . models import Book, Author, Listing, BookRequest, UserMessage, Transaction
 
 def index(request):
     """View function for home page of site."""
@@ -43,6 +43,9 @@ class ListingListView(generic.ListView):
     paginate_by = 10
     ordering = ['book__title']
 
+    def get_queryset(self):
+        return Listing.objects.filter(transaction = None)
+
 
 
 
@@ -58,7 +61,7 @@ class ListingsByUserListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Listing.objects.filter(user = self.request.user)
+        return Listing.objects.filter(user = self.request.user).order_by('transaction_id')
 
 
 class RequestsByUserListView(LoginRequiredMixin, generic.ListView):
@@ -67,7 +70,7 @@ class RequestsByUserListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return BookRequest.objects.filter(user = self.request.user)
+        return BookRequest.objects.filter(user = self.request.user).order_by('transaction_id')
 
 class UserMessagesByUserListView(LoginRequiredMixin, generic.ListView):
     model = UserMessage
@@ -124,7 +127,60 @@ class UserMessageDetailView(LoginRequiredMixin,generic.DetailView):
             self.object.save()
         return context
 
+class ListingUpdate(generic.UpdateView):
+    model = Listing
+    template_name_suffix = '_update_form'
+    fields = ('price','condition','comment')
 
+def create_listing_transaction(request, id = None):
+    if id is not None:
+        listing = get_object_or_404(Listing, id = id)
+    else:
+        listing = None
+    form = TransactionListingForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.seller = request.user
+        if listing is not None:
+            instance.book = listing.book
+        instance.save()
+        if listing is not None:
+            listing.transaction_id = instance.id
+            listing.save()
+        return HttpResponseRedirect(reverse('my-listings'))
+
+    else:
+        form = TransactionListingForm()
+
+        context = {
+        'form': form,
+         }
+    return render(request, 'market/create_transaction.html', context)
+
+def create_bookrequest_transaction(request, id = None):
+    if id is not None:
+        book_request = get_object_or_404(BookRequest, id = id)
+    else:
+        listing = None
+    form = TransactionBookRequestForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.buyer = request.user
+        if book_request is not None:
+            instance.book = book_request.book
+        instance.save()
+        if book_request is not None:
+            book_request.transaction_id = instance.id
+            book_request.save()
+        return HttpResponseRedirect(reverse('my-requests'))
+
+    else:
+        form = TransactionBookRequestForm()
+
+        context = {
+        'form': form,
+         }
+    return render(request, 'market/create_transaction.html', context)
 
 
 def add_listing_check(request):

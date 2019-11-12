@@ -6,14 +6,19 @@
 
   <table>
     <tr>
-      <th>Request ID</th>
+      <th></th>
       <th>Title</th>
       <th>Desired Price</th>
       <th>Desired Condition</th>
+      <th>Status</th>
     </tr>
     {% for bookrequest in bookrequest_list %}
       <tr>
-        <td>{{ bookrequest.id }}</td> <td>{{ bookrequest.book }}</td> <td>{{ bookrequest.desired_price }}</td> <td>{{ bookrequest.get_desired_condition_display }}</td>
+        {% if bookrequest.transaction_id == NULL %}
+        <td><a href="{% url 'create-request-transaction' bookrequest.id %}">Update Status</a></td> <td>{{ bookrequest.book }}</td> <td>{{ bookrequest.desired_price }}</td> <td>{{ bookrequest.get_desired_condition_display }}</td><td>Open</td>
+        {% else %}
+        <td></td> <td>{{ bookrequest.book }}</td> <td>{{ bookrequest.desired_price }}</td> <td>{{ bookrequest.get_desired_condition_display }}</td><td>{{ bookrequest.transaction.get_status_display }}</td>
+        {% endif %}
       </tr>
     {% endfor %}
   </table>

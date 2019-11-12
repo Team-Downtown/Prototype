@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from . models import Book, Listing
+from . models import Book, Listing, Transaction
 
 class CheckISBNForm(forms.Form):
     isbn = forms.CharField(label='ISBN', empty_value='Enter a 13-character ISBN', min_length=13, max_length=13, strip=True,
@@ -41,3 +41,12 @@ class ContactForm(forms.Form):
                                    widget = forms.Textarea
                                    )
 
+class TransactionListingForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = ['status','buyer','price']
+
+class TransactionBookRequestForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = ['status','seller','price']

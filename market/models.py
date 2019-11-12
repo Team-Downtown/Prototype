@@ -126,15 +126,25 @@ class BookRequest(models.Model):
 
     comment = models.TextField(max_length=200, blank=True)
 
-    transaction = models.ForeignKey('Transaction',on_delete=models.SET_NULL, null=True, blank=True)
+    transaction = models.ForeignKey('Transaction',on_delete=models.SET_NULL, null=True, blank=True, related_name='transaction')
 
 class Transaction(models.Model):
 
+    TX_STATUS = (
+        (1, 'Sold in Marketplace'),
+        (2, 'Sold outside Marketplace'),
+        (3, 'Closed')
+    )
+
     book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
-    seller = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='seller', null=True)
-    buyer = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='buyer', null=True)
-    date_closed = models.DateTimeField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    seller = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='seller', blank = True, null=True)
+    buyer = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, related_name='buyer', blank = True, null=True)
+    date_closed = models.DateTimeField(auto_now_add=True)
+    price = models.DecimalField(max_digits=6, decimal_places=2, blank = True, null=True)
+    status = models.IntegerField(
+        choices = TX_STATUS,
+        default = 1,
+    )
 
 class UserMessage(models.Model):
 

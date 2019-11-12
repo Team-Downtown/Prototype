@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+
+
+
+{% block content %}
+<h1>Create Transaction</h1>
+<form  method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
+{% block jquery %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"> </script>
+<script>
+    // Call hideShow when page is loaded
+    $(document).ready(function(){
+        hideShow()
+    });
+
+    // call hideShow when the user clicks on the component_type dropdownlist
+    $("select#id_status").click(function(){
+        hideShow()
+    });
+
+    function hideShow(){
+        if (document.getElementById('id_status').options[document.getElementById('id_status').selectedIndex].value == "2" || document.getElementById('id_status').options[document.getElementById('id_status').selectedIndex].value == "3")
+        {
+            $('label[for="id_buyer"], select#id_buyer').hide();
+            $('label[for="id_seller"], select#id_seller').hide();
+            $('label[for="id_price"], input#id_price').hide();
+
+        }else
+        {
+            $('label[for="id_buyer"], select#id_buyer').show();
+            $('label[for="id_seller"], select#id_seller').show();
+            $('label[for="id_price"], input#id_price').show();
+        }
+    };
+</script>
+{% endblock %}

@@ -10,7 +10,13 @@
   <p> <strong> Price: {{ bookrequest.desired_price }}</strong></p>
   <p> <strong> Condition: {{ bookrequest.get_desired_condition_display }}</strong></p>
   <p> <strong> Comment: {{ bookrequest.comment }}</strong></p>
+   {% ifequal user bookrequest.user %}
+    <p> <a href="{% url 'create-request-transaction' bookrequest.id %}">Create transaction</a></p>
+
+  {% else %}
+
 {% if user.is_authenticated %}
     <p> <button><a href="{% url 'contact-requester' bookrequest.id %}">Contact {{ bookrequest.user }}</a> </button></p>
   {% endif %}
+{% endifequal %}
 {% endblock %}

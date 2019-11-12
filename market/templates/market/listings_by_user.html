@@ -6,15 +6,19 @@
 
   <table>
     <tr>
-      <th>Seller</th>
+      <th></th>
       <th>Title</th>
       <th>Price</th>
       <th>Condition</th>
-      <th>Comment</th>
+      <th>Status</th>
     </tr>
     {% for listing in listing_list %}
       <tr>
-        <td>{{ listing.user }} </td><td> {{ listing.book }}</td> <td>{{ listing.price }}</td> <td>{{ listing.get_condition_display }}</td> <td>{{ listing.comment }}</td>
+        {% if listing.transaction_id == NULL %}
+        <td><a href="{% url 'create-listing-transaction' listing.id %}">Update Status</a></td> <td>{{ listing.book }}</td> <td>{{ listing.price }}</td> <td>{{ listing.get_condition_display }}</td><td>Open</td>
+        {% else %}
+        <td></td> <td>{{ listing.book }}</td> <td>{{ listing.price }}</td> <td>{{ listing.get_condition_display }}</td><td>{{ listing.transaction.get_status_display }}</td>
+        {% endif %}
       </tr>
     {% endfor %}
   </table>
