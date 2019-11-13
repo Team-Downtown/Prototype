@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>User Message Details</h2>
+  <p> <strong> Date: {{ usermessage.date }}</strong></p>
+  <p> <strong> Receiver {{ usermessage.receiver }}</strong></p>
+  <p> <strong> Sender: {{ usermessage.sender }}</strong></p>
+  <p> <strong> Subject: {{ msg_context }}</strong></p>
+  <p> <strong> Message: {{ usermessage.msg }}</strong></p>
+{% if user.is_authenticated %}
+    <p> <a href="{% url 'respond-to-message' usermessage.id %}">Respond to  {{ usermessage.sender }} about this listing</a></p>
+  {% endif %}
+{% endblock %}

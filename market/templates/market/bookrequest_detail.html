@@ -1,13 +1,22 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h2>Book Request Info</h2>
-  <h3> Title: {{ bookrequest.book }}</h3>
+  <h1>Book Request Info</h1>
+  <img src={{bookrequest.book.cover_image}}> </img>
+  <h4> {{ bookrequest.book }}</h4>
   {% if user.is_authenticated %}
     <p> <strong> Requested By: {{ bookrequest.user }} - {{ bookrequest.user.email }}</strong></p></p>
   {% endif %}
   <p> <strong> Price: {{ bookrequest.desired_price }}</strong></p>
   <p> <strong> Condition: {{ bookrequest.get_desired_condition_display }}</strong></p>
   <p> <strong> Comment: {{ bookrequest.comment }}</strong></p>
+   {% ifequal user bookrequest.user %}
+    <p> <a href="{% url 'create-request-transaction' bookrequest.id %}">Create transaction</a></p>
 
+  {% else %}
+
+{% if user.is_authenticated %}
+    <p> <button><a href="{% url 'contact-requester' bookrequest.id %}">Contact {{ bookrequest.user }}</a> </button></p>
+  {% endif %}
+{% endifequal %}
 {% endblock %}
