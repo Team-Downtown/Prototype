@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
+from . forms import *
 from . models import *
 
 
@@ -83,6 +84,22 @@ class ViewTests(TestCase):
         listing = ModelTests.create_listing()
         res = self.get_response('listing-detail', {'pk': listing.id})
     
+    def test_listing_add_check(self):
+        res = self.get_response('add-listing-check')
+    
+    def test_listing_add(self):
+        book = ModelTests.create_book()
+        res = self.get_response('add-listing', {'isbn': book.isbn})
+    
+    def test_listing_contact(self):
+        listing = ModelTests.create_listing()
+        res = self.get_response('contact-lister', {'id': listing.id})
+    
+    def test_listing_filter(self):
+        listing = ModelTests.create_listing()
+        res = self.get_response('listings-by-book', {'isbn': listing.book.isbn})
+        self.assertIn(listing.book.title, str(res.content))
+    
     def test_request_list(self):
         request = ModelTests.create_request()
         res = self.get_response('bookrequests')
@@ -92,3 +109,70 @@ class ViewTests(TestCase):
         request = ModelTests.create_request()
         res = self.get_response('bookrequest-detail', {'pk': request.id})
     
+    def test_request_add_check(self):
+        res = self.get_response('add-request-check')
+    
+    def test_request_add(self):
+        book = ModelTests.create_book()
+        res = self.get_response('add-request', {'isbn': book.isbn})
+    
+    def test_request_contact(self):
+        request = ModelTests.create_request()
+        res = self.get_response('contact-requester', {'id': request.id})
+    
+    def test_request_filter(self):
+        request = ModelTests.create_request()
+        res = self.get_response('bookrequests-by-book', {'isbn': request.book.isbn})
+        self.assertIn(request.book.title, str(res.content))
+    
+    def test_search(self):
+        res = self.get_response('search')
+    
+
+class FormTests(TestCase):
+    def test_check_isbn_blank(self):
+        form = CheckISBNForm()
+        self.assertFalse(form.is_valid())
+    
+    def test_check_isbn_valid(self):
+        book = ModelTests.create_book()
+        form = CheckISBNForm({
+            'isbn': book.isbn,
+            })
+        self.assertTrue(form.is_valid())
+    
+    def test_add_listing_blank(self):
+        form = AddListingForm()
+        self.assertFalse(form.is_valid())
+    
+    def test_add_listing_valid(self):
+        book = ModelTests.create_book()
+        form = AddListingForm({
+            'isbn': book.isbn,
+            'price': 10,
+            'condition': 'N',
+            })
+        self.assertTrue(form.is_valid())
+    
+    def test_add_request_blank(self):
+        form = AddRequestForm()
+        self.assertFalse(form.is_valid())
+    
+    def test_add_request_valid(self):
+        book = ModelTests.create_book()
+        form = AddRequestForm({
+            'isbn': book.isbn,
+            'price': 10,
+            'condition': 'N',
+            })
+        self.assertTrue(form.is_valid())
+    
+    def test_contact_blank(self):
+        form = ContactForm()
+        self.assertFalse(form.is_valid())
+    
+    def test_contact_valid(self):
+        form = ContactForm({
+            'msg': 'Test',
+            })
+        self.assertTrue(form.is_valid())
