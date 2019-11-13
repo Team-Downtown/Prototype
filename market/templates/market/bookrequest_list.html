@@ -15,6 +15,7 @@
     {% for bookrequest in bookrequest_list %}
       <tr>
         <td><a href="{% url 'bookrequest-detail' bookrequest.id %}">{{ bookrequest.user }}</a></td> <td>{{ bookrequest.book }}</td> <td>{{ bookrequest.desired_price }}</td> <td>{{ bookrequest.get_desired_condition_display }}</td>
+		<td id ="request-comment">{{ bookrequest.comment }}</td>
       </tr>
     {% endfor %}
   </table>
