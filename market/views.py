@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 from . forms import CheckISBNForm, AddListingForm, AddRequestForm, ContactForm, TransactionListingForm, TransactionBookRequestForm
 from . models import Book, Author, Listing, BookRequest, UserMessage, Transaction
@@ -32,6 +33,7 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 10
 
 
 class AuthorListView(generic.ListView):
@@ -47,12 +49,13 @@ class ListingListView(generic.ListView):
         return Listing.objects.filter(transaction = None)
 
 
-
-
 class BookRequestListView(generic.ListView):
     model = BookRequest
     paginate_by = 10
     ordering = ['book__title']
+
+    def get_queryset(self):
+        return BookRequest.objects.filter(transaction = None)
 
 
 class ListingsByUserListView(LoginRequiredMixin, generic.ListView):
@@ -131,6 +134,7 @@ class ListingUpdate(generic.UpdateView):
     model = Listing
     template_name_suffix = '_update_form'
     fields = ('price','condition','comment')
+    success_url = '/marketplace/mylistings/'
 
 def create_listing_transaction(request, id = None):
     if id is not None:
@@ -182,7 +186,7 @@ def create_bookrequest_transaction(request, id = None):
          }
     return render(request, 'market/create_transaction.html', context)
 
-
+@login_required
 def add_listing_check(request):
     if request.method == 'POST':
         form = CheckISBNForm(request.POST)
@@ -197,7 +201,7 @@ def add_listing_check(request):
     }
     return render(request, 'market/add_listing_check.html', context)
 
-
+@login_required
 def add_listing(request, isbn):
     if request.method == 'POST':
         form = AddListingForm(request.POST)
@@ -222,7 +226,7 @@ def add_listing(request, isbn):
     }
     return render(request, 'market/add_listing.html', context)
 
-
+@login_required
 def add_request_check(request):
     if request.method == 'POST':
         form = CheckISBNForm(request.POST)
@@ -237,7 +241,7 @@ def add_request_check(request):
     }
     return render(request, 'market/add_request_check.html', context)
 
-
+@login_required
 def add_request(request, isbn):
     if request.method == 'POST':
         form = AddRequestForm(request.POST)
