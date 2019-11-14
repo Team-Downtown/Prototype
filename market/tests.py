@@ -49,8 +49,7 @@ class ModelTests(TestCase):
             self.assertIn(author.name, display)
         
     def test_book_api_working(self):
-        Book.add_if_not_present('9781590282410')
-        book = Book.objects.get(isbn='9781590282410')
+        book = Book.add_if_not_present('9781590282410')
         self.assertEqual(book.isbn, '9781590282410')
         self.assertEqual(book.title, 'Python Programming')
 

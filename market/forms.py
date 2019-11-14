@@ -8,8 +8,8 @@ class CheckISBNForm(forms.Form):
     
     def clean_isbn(self):
         data = self.cleaned_data['isbn']
-        Book.add_if_not_present(data)
-        if not Book.objects.filter(isbn=data).exists():
+        book = Book.add_if_not_present(data)
+        if book is None:
             raise ValidationError('ISBN not found; please try again')
         return data
 
