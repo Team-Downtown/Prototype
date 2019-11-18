@@ -3,6 +3,9 @@
 {% block content %}
 
 <h3><p>Username: {{ user.username }} </p> </h3>
+{% if user.image %}
+    <img src="{{ user.image.url }}" width="200">
+{% endif %}
 <p>Email: {{  user.email }}</p>
 <p>First Name: {{ user.first_name }} </p>
 <p>Last Name: {{ user.last_name }} </p>

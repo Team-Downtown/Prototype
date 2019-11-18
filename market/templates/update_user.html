@@ -3,7 +3,7 @@
 {% block content %}
 <div class="signup-container">
 <img src="https://i.ibb.co/Yk8X0ht/sign-up.jpg">
- <form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
      {% if field.label != 'Password' %}
