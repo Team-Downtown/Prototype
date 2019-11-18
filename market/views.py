@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 from . forms import CheckISBNForm, AddListingForm, AddRequestForm, ContactForm, TransactionListingForm, TransactionBookRequestForm
 from . models import Book, Author, Listing, BookRequest, UserMessage, Transaction
@@ -12,6 +13,7 @@ def index(request):
     """View function for home page of site."""
 
     # Generate counts of some of the main objects
+    book_list = Book.objects.all()
     num_books = Book.objects.all().count()
     num_listings = Listing.objects.all().count()
     num_requests = BookRequest.objects.all().count()
@@ -20,6 +22,7 @@ def index(request):
     num_authors = Author.objects.count()
 
     context = {
+        'book_list': book_list,
         'num_books': num_books,
         'num_listings': num_listings,
         'num_authors': num_authors,
@@ -32,6 +35,7 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 10
 
 
 class AuthorListView(generic.ListView):
@@ -47,12 +51,13 @@ class ListingListView(generic.ListView):
         return Listing.objects.filter(transaction = None)
 
 
-
-
 class BookRequestListView(generic.ListView):
     model = BookRequest
     paginate_by = 10
     ordering = ['book__title']
+
+    def get_queryset(self):
+        return BookRequest.objects.filter(transaction = None)
 
 
 class ListingsByUserListView(LoginRequiredMixin, generic.ListView):
@@ -78,7 +83,7 @@ class UserMessagesByUserListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return UserMessage.objects.filter(Q(receiver = self.request.user)|Q(sender = self.request.user))
+        return UserMessage.objects.filter(Q(receiver = self.request.user)|Q(sender = self.request.user)).order_by('-date')
       #  return UserMessage.objects.all()
 
 class SearchView(generic.TemplateView):
@@ -116,8 +121,10 @@ class UserMessageDetailView(LoginRequiredMixin,generic.DetailView):
         context = super().get_context_data(**kwargs)
         if (self.object.listing_id!=None):
             context['msg_context'] = "Listing ID "+str(self.object.listing_id.id)+" - "+self.object.listing_id.book.title
+            context['cover_image'] = self.object.listing_id.book.cover_image
         elif (self.object.request_id!=None):
             context['msg_context'] = "Request ID "+str(self.object.request_id.id)+" - "+self.object.request_id.book.title
+            context['cover_image'] = self.object.request_id.book.cover_image
         # Possibly decrement unread messages count here??
         if self.object.read_flag == False:
             if self.object.receiver.unreadMessages!=0:
@@ -131,6 +138,7 @@ class ListingUpdate(generic.UpdateView):
     model = Listing
     template_name_suffix = '_update_form'
     fields = ('price','condition','comment')
+    success_url = '/marketplace/mylistings/'
 
 def create_listing_transaction(request, id = None):
     if id is not None:
@@ -182,7 +190,7 @@ def create_bookrequest_transaction(request, id = None):
          }
     return render(request, 'market/create_transaction.html', context)
 
-
+@login_required
 def add_listing_check(request):
     if request.method == 'POST':
         form = CheckISBNForm(request.POST)
@@ -197,7 +205,7 @@ def add_listing_check(request):
     }
     return render(request, 'market/add_listing_check.html', context)
 
-
+@login_required
 def add_listing(request, isbn):
     if request.method == 'POST':
         form = AddListingForm(request.POST)
@@ -222,7 +230,7 @@ def add_listing(request, isbn):
     }
     return render(request, 'market/add_listing.html', context)
 
-
+@login_required
 def add_request_check(request):
     if request.method == 'POST':
         form = CheckISBNForm(request.POST)
@@ -237,7 +245,7 @@ def add_request_check(request):
     }
     return render(request, 'market/add_request_check.html', context)
 
-
+@login_required
 def add_request(request, isbn):
     if request.method == 'POST':
         form = AddRequestForm(request.POST)

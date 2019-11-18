@@ -5,8 +5,12 @@
   <img src={{ listing.book.cover_image }}> </img>
   <h4> {{ listing.book }}</h4>
   {% if user.is_authenticated %}
-    <p> <strong> Listed by: </strong> {{ listing.user }} - {{ listing.user.email }}</p></p>
-  {% endif %}
+    {% if listing.user.email %}
+      <p> <strong> Listed by: </strong> {{ listing.user }} - <a href="mailto:"{{ listing.user.email }}>{{ listing.user.email }}</a></p></p>
+    {% else %}
+      <p> <strong> Listed by: </strong> {{ listing.user }}
+    {% endif %}
+{% endif %}
   <p> <strong> Price: </strong>{{ listing.price }}</p>
   <p> <strong> Condition: </strong>{{ listing.get_condition_display }}</p>
   <p> <strong> Comment: </strong> {{ listing.comment }}</p>

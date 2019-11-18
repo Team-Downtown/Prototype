@@ -6,10 +6,19 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = MarketUser
-        fields = UserCreationForm.Meta.fields + ('phoneNumber','image','bio')
+        fields = ('username','first_name','last_name','email','phoneNumber','image','bio')
+        labels = {
+            'phoneNumber':'Phone Number',
+            'bio':'Biographical Information',
+        }
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = MarketUser
-        fields = UserCreationForm.Meta.fields + ('phoneNumber','image','bio')
+        fields = ('first_name','last_name','email','phoneNumber','image','bio')
+        labels = {
+            'phoneNumber':'Phone number',
+            'bio':'Biographical Information',
+        }
+

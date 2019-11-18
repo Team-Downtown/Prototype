@@ -5,7 +5,11 @@
   <img src={{bookrequest.book.cover_image}}> </img>
   <h4> {{ bookrequest.book }}</h4>
   {% if user.is_authenticated %}
-    <p> <strong> Requested By: {{ bookrequest.user }} - {{ bookrequest.user.email }}</strong></p></p>
+    {% if bookrequest.user.email %}
+      <p> <strong> Request by: </strong> {{ bookrequest.user }} - <a href="mailto:"{{ bookrequest.user.email }}>{{ bookrequest.user.email }}</a></p></p>
+    {% else %}
+      <p> <strong> Requested by: </strong> {{ bookrequest.user }}
+    {% endif %}
   {% endif %}
   <p> <strong> Price: {{ bookrequest.desired_price }}</strong></p>
   <p> <strong> Condition: {{ bookrequest.get_desired_condition_display }}</strong></p>
