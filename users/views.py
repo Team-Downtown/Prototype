@@ -28,7 +28,7 @@ def update_user(request):
 
     user = request.user
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=user)
+        form = CustomUserChangeForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             user = form.save()
             return HttpResponseRedirect(reverse('view-user'))
