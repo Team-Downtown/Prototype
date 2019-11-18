@@ -13,6 +13,7 @@ def index(request):
     """View function for home page of site."""
 
     # Generate counts of some of the main objects
+    book_list = Book.objects.all()
     num_books = Book.objects.all().count()
     num_listings = Listing.objects.all().count()
     num_requests = BookRequest.objects.all().count()
@@ -21,6 +22,7 @@ def index(request):
     num_authors = Author.objects.count()
 
     context = {
+        'book_list': book_list,
         'num_books': num_books,
         'num_listings': num_listings,
         'num_authors': num_authors,
@@ -81,7 +83,7 @@ class UserMessagesByUserListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return UserMessage.objects.filter(Q(receiver = self.request.user)|Q(sender = self.request.user))
+        return UserMessage.objects.filter(Q(receiver = self.request.user)|Q(sender = self.request.user)).order_by('-date')
       #  return UserMessage.objects.all()
 
 class SearchView(generic.TemplateView):
@@ -119,8 +121,10 @@ class UserMessageDetailView(LoginRequiredMixin,generic.DetailView):
         context = super().get_context_data(**kwargs)
         if (self.object.listing_id!=None):
             context['msg_context'] = "Listing ID "+str(self.object.listing_id.id)+" - "+self.object.listing_id.book.title
+            context['cover_image'] = self.object.listing_id.book.cover_image
         elif (self.object.request_id!=None):
             context['msg_context'] = "Request ID "+str(self.object.request_id.id)+" - "+self.object.request_id.book.title
+            context['cover_image'] = self.object.request_id.book.cover_image
         # Possibly decrement unread messages count here??
         if self.object.read_flag == False:
             if self.object.receiver.unreadMessages!=0:

@@ -1,0 +1,33 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="signup-container">
+<img src="https://i.ibb.co/Yk8X0ht/sign-up.jpg">
+ <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+     {% if field.label != 'Password' %}
+      <p style="font-size: 20px;">
+        {{ field.label_tag }}<br>
+		
+        {{ field }}
+		</br>
+        {% if field.help_text %}
+          <small style="color: #454a4b; font-size:20px;">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endif %}
+    {% endfor %}
+    <button type="submit" style="font-size:25px; margin-bottom: 40px;">Update</button>
+	
+  </form>
+  </div>
+
+{% endblock %}
+
+
+
+
