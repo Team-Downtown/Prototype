@@ -3,7 +3,8 @@ from django.core.exceptions import ValidationError
 from . models import Book, Listing, Transaction
 
 class CheckISBNForm(forms.Form):
-    isbn = forms.CharField(label='ISBN', empty_value='Enter a 13-character ISBN', min_length=13, max_length=13, strip=True,
+    isbn = forms.CharField(label='ISBN', min_length=13, max_length=13, strip=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter a 13-character ISBN'}),
         error_messages={'required': 'You must enter an ISBN', 'min_length': 'The ISBN must be 13 characters long', 'max_length': 'The ISBN must be 13 characters long'})
     
     def clean_isbn(self):
@@ -20,7 +21,8 @@ class AddListingForm(CheckISBNForm):
     condition = forms.ChoiceField(choices=Listing.BOOK_STATUS,
         error_messages={'required': 'You must enter a condition'})
     
-    comments = forms.CharField(empty_value='Additional comments (optional)', required=False, strip=True)
+    comments = forms.CharField(required=False, strip=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Additional comments (optional)'}))
 
 class AddRequestForm(CheckISBNForm):
     price = forms.DecimalField(label='Desired price', label_suffix=' $', min_value=0, decimal_places=2,
@@ -29,7 +31,8 @@ class AddRequestForm(CheckISBNForm):
     condition = forms.ChoiceField(label='Desired condition', choices=Listing.BOOK_STATUS,
         error_messages={'required': 'You must enter a condition'})
     
-    comments = forms.CharField(empty_value='Additional comments (optional)', required=False, strip=True)
+    comments = forms.CharField(required=False, strip=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Additional comments (optional)'}))
 
 class ContactForm(forms.Form):
 
