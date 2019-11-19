@@ -382,7 +382,7 @@ font-type:bold-text
       {% block sidebar %}
         <ul class="sidebar-nav">
           <li><a href="{% url 'index' %}">Home</a></li> 
-          <li><a href="{% url 'books' %}">All books</a></li>
+          <li><a href="{% url 'books' %}">All Books</a></li>
           <li><a href="{% url 'bookrequests' %}">All Book Requests</a></li>
         </ul>
         
@@ -391,7 +391,7 @@ font-type:bold-text
           <div class ="user">Hi {{ user.username }}!
           <ul>
             <li><a href="{% url 'my-listings' %}">My Listings</a></li>
-			<li><a href="{% url 'add-listing-check' %}"> Add Listings</a></li>
+			<li><a href="{% url 'add-listing-check' %}"> Add a Listing</a></li>
             <li><a href="{% url 'my-requests' %}">My Requests</a></li>
 			<li><a href="{% url 'add-request-check' %}">Add a request</a></li>
             <li><a href="{% url 'my-user-messages' %}">My Messages </br>{{ user.unreadMessages}} New</a></li>
