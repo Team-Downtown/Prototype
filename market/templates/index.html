@@ -19,28 +19,11 @@
 <table style="margin-bottom:0.5%; width:auto;">
 <tr style="border: 2px solid black">
 {% for book in book_list %}
-	
-		
-
-		
-		
-		
-		<td style="border-right: 1px solid gray;"><a href="{% url 'listings-by-book' book.isbn %}"> <img src={{ book.cover_image }} > </img> </a></td>
-
-
-			
-		
-		
-
-		
-		
-		
-		
-		
-
-
-
-
+  {% if book.cover_image is not None %}
+    <td style="border-right: 1px solid gray;">
+      <a href="{% url 'listings-by-book' book.isbn %}"><img src={{ book.cover_image }} /></a>
+    </td>
+  {% endif %}
 {% endfor %}
 
 </table>

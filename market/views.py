@@ -220,7 +220,7 @@ def add_listing(request, isbn):
                 user = request.user
             listing = Listing(price=price, condition=condition, comment=comment, book=book,user = user)
             listing.save()
-            return HttpResponseRedirect(reverse('listings'))
+            return HttpResponseRedirect(reverse('listing-detail', args=(listing.id,)))
 
     else:
         form = AddListingForm(initial={'isbn': isbn})
@@ -260,7 +260,7 @@ def add_request(request, isbn):
                 user = request.user
             req = BookRequest(desired_price=price, desired_condition=condition, comment=comment, book=book, user=user)
             req.save()
-            return HttpResponseRedirect(reverse('bookrequests'))
+            return HttpResponseRedirect(reverse('bookrequest-detail', args=(req.id,)))
 
     else:
         form = AddRequestForm(initial={'isbn': isbn})

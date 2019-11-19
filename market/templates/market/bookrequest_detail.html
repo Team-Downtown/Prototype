@@ -2,7 +2,9 @@
 
 {% block content %}
   <h1>Book Request Info</h1>
-  <img src={{bookrequest.book.cover_image}}> </img>
+  {% if bookrequest.book.cover_image is not None %}
+    <img src={{bookrequest.book.cover_image}} />
+  {% endif %}
   <h4> {{ bookrequest.book }}</h4>
   {% if user.is_authenticated %}
     {% if bookrequest.user.email %}

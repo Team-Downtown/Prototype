@@ -44,33 +44,55 @@ class Book(models.Model):
     
     @classmethod
     def add_if_not_present(cls, isbn):
-        if not Book.objects.filter(isbn=isbn).exists():
-            response = requests.get('https://www.googleapis.com/books/v1/volumes', params={'q': 'isbn:' + isbn})
+        """Retrieve information from Google Books, add it to the database if necessary, and return the book.
+        
+        If the book is not already present in the database nor found by Google Books, return None.
+        """
+        books = Book.objects.filter(isbn=isbn)
+        if books.exists():
+            return books[0]
+        else:
+            response = requests.get('https://www.googleapis.com/books/v1/volumes', params={
+                'key': 'AIzaSyBqBgY6u3k6j-UaMtmoOPL0PHAf4pglw3I',
+                'q': 'isbn:' + isbn,
+            })
+            
             if response.status_code == 200:
                 j = response.json()
-                if j['totalItems'] > 0:
+                if 'items' in j and len(j['items']) > 0 and 'volumeInfo' in j['items'][0]:
                     volumeInfo = j['items'][0]['volumeInfo']
-                    isbn = next(ident['identifier'] for ident in volumeInfo['industryIdentifiers'] if ident['type'] == 'ISBN_13')
-                    title = volumeInfo['title']
-                    published_date = volumeInfo['publishedDate']
-                    thumbnail_link=""
-                    try:
-                        image_links = volumeInfo['imageLinks']
-                        thumbnail_link = image_links['thumbnail']
-                    except KeyError:
-                        # for debug purposes right now. Probably should remove.
-                        print("imageLinks key not found")
-                    book = Book(isbn=isbn, title=title, published_date=published_date, cover_image=thumbnail_link)
-                    book.save()
                     
-                    for name in volumeInfo['authors']:
-                        author, _ = Author.objects.get_or_create(name=name)
-                        author.save()
-                        book.author.add(author)
+                    # Only title is mandatory
+                    if 'title' in volumeInfo:
+                        title = volumeInfo['title']
+                        
+                        # Use ISBN from API, if provided
+                        if 'industryIndentifiers' in volumeInfo:
+                            isbn13 = [x for x in volumeInfo['industryIdentifiers'] if 'type' in x and x['type'] == 'ISBN_13']
+                            if len(isbn13) > 0 and 'identifier' in isbn13[0]:
+                                isbn = isbn13[0]['identifier']
+                        
+                        book = Book(isbn=isbn, title=title)
+                        
+                        if 'publisher' in volumeInfo:
+                            book.publisher = volumeInfo['publisher']
+                        
+                        if 'publishedDate' in volumeInfo:
+                            book.published_date = volumeInfo['publishedDate']
+                        
+                        if 'imageLinks' in volumeInfo and 'thumbnail' in volumeInfo['imageLinks']:
+                            book.cover_image = volumeInfo['imageLinks']['thumbnail']
+                        
+                        # Must be saved before adding authors
                         book.save()
-
-
-
+                        if 'authors' in volumeInfo:
+                            for name in volumeInfo['authors']:
+                                author, _ = Author.objects.get_or_create(name=name)
+                                author.save()
+                                book.author.add(author)
+                        
+                        book.save()
+                        return book
 
 
 class Listing(models.Model):

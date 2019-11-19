@@ -7,9 +7,11 @@
     {% for book in book_list %}
 	  <div class="Book">
 		<li>
-		<div class="book-cover">
-        <img src={{ book.cover_image }}> </img> 
-		</div>
+		{% if book.cover_image is not None %}
+		  <div class="book-cover">
+            <img src={{ book.cover_image }} />
+		  </div>
+		{% endif %}
 		<div class="Book-info">
 		
 			<div class="book-title">

@@ -14,8 +14,9 @@
 		
 
 	  </div>
-	    <img src={{ cover_image }}> </img>
-
+    {% if cover_image is not None %}
+	    <img src={{ cover_image }} />
+    {% endif %}
 	  
 
   	<p style="margin-bottom:5%;">  {{ msg_context }}</p>	
