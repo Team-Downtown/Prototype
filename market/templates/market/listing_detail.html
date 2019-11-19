@@ -2,7 +2,9 @@
 
 {% block content %}
   <h1>Listing Info</h1>
-  <img src={{ listing.book.cover_image }}> </img>
+  {% if listing.book.cover_image is not None %}
+    <img src={{ listing.book.cover_image }} />
+  {% endif %}
   <h4> {{ listing.book }}</h4>
   {% if user.is_authenticated %}
     {% if listing.user.email %}
