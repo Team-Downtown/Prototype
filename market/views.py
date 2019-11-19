@@ -13,7 +13,7 @@ def index(request):
     """View function for home page of site."""
 
     # Generate counts of some of the main objects
-    book_list = Book.objects.all()
+    book_list = Book.objects.order_by("title")[:5]
     num_books = Book.objects.all().count()
     num_listings = Listing.objects.all().count()
     num_requests = BookRequest.objects.all().count()
