@@ -1,12 +1,59 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Textbook Marketplace</h1>
-  <p>The marketplace has the following record counts:</p>
+  <!-- <p>The marketplace has the following record counts:</p>
   <ul>
     <li><strong>Books:</strong> {{ num_books }}</li>
     <li><strong>Authors:</strong> {{ num_authors }}</li>
     <li><strong>Listings:</strong> {{ num_listings }}</li>
     <li><strong>BookRequests</strong> {{ num_requests }}</li>
-  </ul>
+  </ul> -->
+  
+  
+  <div class= "home1"> 
+<img src="https://i.ibb.co/ZzrgYMd/welcome.jpg" alt="pic1" border="0" style= "width:100%;"></div>
+
+
+<div class="bookOverviewContainer">
+<img src="https://i.ibb.co/sFqDMh6/PIC2.jpg" style="width:auto;">
+<table style="margin-bottom:0.5%; width:auto;">
+<tr style="border: 2px solid black">
+{% for book in book_list %}
+	
+		
+
+		
+		
+		
+		<td style="border-right: 1px solid gray;"><a href="{% url 'listings-by-book' book.isbn %}"> <img src={{ book.cover_image }} > </img> </a></td>
+
+
+			
+		
+		
+
+		
+		
+		
+		
+		
+
+
+
+
+{% endfor %}
+
+</table>
+
+
+<button  ><a href="{% url 'books' %}" style="color: black;">View all books</a></button>
+ 
+</div>
+
+</br>		
+
+
+
 {% endblock %}
+
+

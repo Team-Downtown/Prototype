@@ -5,9 +5,9 @@ from django.db import models
 
 class MarketUser(AbstractUser):
 
-    phoneNumber = models.CharField(max_length=12, default=0)
+    phoneNumber = models.CharField(max_length=12, blank=True)
     image = models.ImageField(upload_to='profile_image', blank=True)
-    bio = models.TextField(default='')
+    bio = models.TextField(default='', blank=True)
     unreadMessages = models.IntegerField(default=0)
 
 
