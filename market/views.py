@@ -223,10 +223,12 @@ def add_listing(request, isbn):
             return HttpResponseRedirect(reverse('listing-detail', args=(listing.id,)))
 
     else:
+        title = Book.objects.get(isbn=isbn).title
         form = AddListingForm(initial={'isbn': isbn})
 
     context = {
         'add_listing_form': form,
+        'title':title,
     }
     return render(request, 'market/add_listing.html', context)
 
@@ -264,9 +266,11 @@ def add_request(request, isbn):
 
     else:
         form = AddRequestForm(initial={'isbn': isbn})
+        title = Book.objects.get(isbn=isbn).title
 
     context = {
         'add_request_form': form,
+        'title' : title
     }
     return render(request, 'market/add_request.html', context)
 
@@ -337,9 +341,9 @@ def respond_to_message(request, id):
         'form':form, 'usermessage':usermessage})
 
 def getListingsByBook(request, isbn):
-    books = Listing.objects.filter(book = isbn)
+    books = Listing.objects.filter(book = isbn, transaction=None)
     return render(request,'market/listing_list.html', {'listing_list':books})
 
 def getBookRequestsByBook(request, isbn):
-    books = BookRequest.objects.filter(book = isbn)
+    books = BookRequest.objects.filter(book = isbn, transaction=None)
     return render(request,'market/bookrequest_list.html', {'bookrequest_list':books})

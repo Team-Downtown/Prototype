@@ -1,7 +1,8 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Adding a new request</h1>
+  <h1>Adding a new request for the book</h1>
+  <h1> {{ title }} </h1>
   <form action="" method="post">
 	{% csrf_token %}
 	<table>
