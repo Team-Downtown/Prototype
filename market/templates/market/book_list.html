@@ -23,11 +23,11 @@
               </div>
 
               <div class="book-ISBN">
-                  <p class="bold-text">Listing Count: </p> <p> <a href="{% url 'listings-by-book' book.isbn %}">{{ book.listing_set.count }}</a> </p>
+                  <p class="bold-text">Listing Count: </p> <p> <a href="{% url 'listings-by-book' book.isbn %}">{{ book.count_open_listings }}</a> </p>
               </div>
 
             <div class="book-ISBN">
-              <p class="bold-text">Request Count: </p> <p><a href="{% url 'bookrequests-by-book' book.isbn %}"> {{ book.bookrequest_set.count }} </a></p>
+              <p class="bold-text">Request Count: </p> <p><a href="{% url 'bookrequests-by-book' book.isbn %}"> {{ book.count_open_bookrequests }} </a></p>
               </div>
 
         </div>
