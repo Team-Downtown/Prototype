@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Users</h1>
+  {% if user_list %}
+	<div class ="user-count-table">
+  <table>
+    <tr>
+      <th>User</th>
+      <th>PhoneNumber</th>
+    </tr>
+    {% for user in user_list %}
+      <tr>
+        <td><a href="{% url 'user-detail' user.id %}">  </a>
+      </tr>
+    {% endfor %}
+  </table>
+  </div>
+  {% else %}
+    <p>There are no users in the market.</p>
+  {% endif %}
+{% endblock %}

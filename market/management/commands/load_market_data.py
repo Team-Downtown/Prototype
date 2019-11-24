@@ -20,6 +20,13 @@ class Command(BaseCommand):
                 isbn = row["ISBN"].strip()
                 Book.add_if_not_present(isbn)
 
+        superuser = MarketUser.objects.create_superuser(
+            username='textbook',
+            email='textbook@mail.com',
+            password='capstone')
+
+        superuser.save()
+
         # Create some test users
         users = []
         for i in range(20):
@@ -35,13 +42,11 @@ class Command(BaseCommand):
         comments = ["Great book!","Need asap!","It was just ok","I don't know what the professor was thinking","Very informative"]
 
         dates = []
-        count = 0
-        if count < 20: # generate 20 random dates
-            mo = random.randint(1, 13)
+        for i in range(20): # generate 20 random dates
+            mo = random.randint(1, 12)
             day = random.randint(1, 28)
-            yr = random.randint(2014, 2018)
+            yr = random.randint(2014, 2019)
             dates.append(date(yr, mo, day))
-            count += 1
 
         # Find all the books
 

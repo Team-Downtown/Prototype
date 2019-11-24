@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 # Application definition
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'market',
+    'reports',
 ]
 
 AUTH_USER_MODEL = 'users.MarketUser'

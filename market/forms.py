@@ -53,12 +53,3 @@ class TransactionBookRequestForm(forms.ModelForm):
     class Meta:
         model = Transaction
         fields = ['status','seller','price']
-
-
-class CreateReportForm(forms.Form):
-
-    start_date = forms.DateField(label='Start Date',
-        error_messages={'required': 'You must enter a start date for your report'})
-
-    end_date = forms.DateField(label='End Date',
-        error_messages={'required': 'You must enter an end date for your report'})

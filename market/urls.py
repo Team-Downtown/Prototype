@@ -28,5 +28,4 @@ urlpatterns = [
     path('mylistings/update/<int:pk>',views.ListingUpdate.as_view(), name='update-listing'),
     path('mylistings/transaction/<int:id>',views.create_listing_transaction, name='create-listing-transaction'),
     path('myrequests/transaction/<int:id>',views.create_bookrequest_transaction, name='create-request-transaction'),
-    path('report/customreport', views.create_report, name='create-report')
 ]

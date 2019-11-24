@@ -14,6 +14,12 @@ class SignUp(generic.CreateView):
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
 
+class UserListView(generic.ListView):
+    model = MarketUser
+
+class UserDetailView(generic.DetailView):
+    model = MarketUser
+
 # class UpdateUser(generic.UpdateView):
 #     model = MarketUser
 #     form_class = CustomUserChangeForm
