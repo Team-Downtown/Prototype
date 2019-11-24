@@ -2,11 +2,15 @@ from users.models import MarketUser
 from .models import Listing, Request, Transaction
 import numpy as np
 
-def createCSV(model):
+def createCSV(object_list):
+
+    num_in_list = len(object_list)
+    response = HttpResponse(content_type='text/csv')
+
 #
 # num_listings = str(listings.count())
 #
-# response = HttpResponse(content_type='text/csv')
+#
 # response['Content-Disposition'] = 'attachment; filename="listings_report.csv"'
 # writer = csv.writer(response, delimiter=',')
 #

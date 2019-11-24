@@ -11,19 +11,19 @@ class BookAdmin(admin.ModelAdmin):
 admin.site.register(Book, BookAdmin)
 
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ('book','user','condition','price','comment','transaction')
+    list_display = ('book','user','condition','price','comment','transaction', 'date_created')
 
     list_filter = ['condition']
 
-    fields = ['book','user','condition','price','comment','transaction']
+    fields = ['book','user','condition','price','comment','transaction', 'date_created']
 
 
 admin.site.register(Listing,ListingAdmin)
 
 class BookRequestAdmin(admin.ModelAdmin):
-    list_display = ('book','user','desired_condition','desired_price', 'transaction','comment')
+    list_display = ('book','user','desired_condition','desired_price', 'transaction','comment', 'date_created')
 
-    fields = ['book','user','desired_condition','desired_price','comment', 'transaction']
+    fields = ['book','user','desired_condition','desired_price','comment', 'transaction', 'date_created']
 
 admin.site.register(BookRequest,BookRequestAdmin)
 

@@ -8,5 +8,7 @@ urlpatterns = [
     path('listing_report/',views.ListingReportView.as_view(), name='listing-report'),
     path('bookrequest_report/',views.BookRequestReportView.as_view(), name='bookrequest-report'),
     path('transaction_report/',views.TransactionReportView.as_view(), name='transaction-report'),
+    path('transaction_yes_report/',views.TransactionReportView.as_view(), name='transaction-yes-report'),
+    path('transaction_no_report/',views.TransactionReportView.as_view(), name='transaction-no-report'),
 
 ]

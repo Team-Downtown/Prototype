@@ -59,3 +59,25 @@ class UserReportView(generic.ListView):
         users = MarketUser.objects.filter(Q(date_joined__range=[start, end]))
 
         return users
+
+class TransactionSoldOnSiteReportView(generic.ListView):
+    model =  Transaction
+
+    def get_queryset(self):
+        start = self.request.GET.get('start_date')
+        end = self.request.GET.get('end_date')
+
+        transactions_yes =  Transaction.objects.filter(Q(date_closed__range=[start, end])).filter(status=1)
+
+        return transactions_yes
+
+class TransactionSoldOnSiteReportView(generic.ListView):
+    model =  Transaction
+
+    def get_queryset(self):
+        start = self.request.GET.get('start_date')
+        end = self.request.GET.get('end_date')
+
+        transactions_no =  Transaction.objects.filter(Q(date_closed__range=[start, end])).filter(status=2)
+
+        return transactions_no
