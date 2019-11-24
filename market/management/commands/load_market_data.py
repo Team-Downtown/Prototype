@@ -1,6 +1,7 @@
 import sys
 import random
 import csv
+from faker import Faker
 
 from django.core.management.base import BaseCommand
 from users.models import MarketUser
@@ -11,6 +12,8 @@ from datetime import date, datetime
 
 
 class Command(BaseCommand):
+
+
 
     def handle(self, *args, **options):
         with open('books.csv') as csv_file:
@@ -41,13 +44,7 @@ class Command(BaseCommand):
         book_conditions=['N','LN','VG','G','F','P']
         comments = ["Great book!","Need asap!","It was just ok","I don't know what the professor was thinking","Very informative"]
 
-        dates = []
-        for i in range(20): # generate 20 random dates
-            mo = random.randint(1, 12)
-            day = random.randint(1, 28)
-            yr = random.randint(2014, 2019)
-            dates.append(date(yr, mo, day))
-
+        fake = Faker()
         # Find all the books
 
         books = Book.objects.all()
@@ -56,18 +53,19 @@ class Command(BaseCommand):
 
         for book in books:
 
+
             with override_settings(USE_TZ=False):
 
                 for i in range(random.randrange(1,10)):
                     listing = Listing.objects.create(user=random.choice(users), book=book, price=round(random.uniform(5.0,50.5), 1),
                                                  condition=random.choice(book_conditions),comment=random.choice(comments),
-                                                 date_created=random.choice(dates))
+                                                 date_created=fake.date_between(start_date='-10y', end_date='now'))
                     listing.save()
 
                 for j in range(random.randrange(1,10)):
                     book_request = BookRequest.objects.create(user=random.choice(users), book=book, desired_price=round(random.uniform(5.0,50.5), 1),
                                                  desired_condition=random.choice(book_conditions),comment=random.choice(comments),
-                                                 date_created=random.choice(dates))
+                                                 date_created=fake.date_between(start_date='-10y', end_date='now'))
                     book_request.save()
 
                 for k in range(random.randrange(1, 10)):
@@ -78,7 +76,7 @@ class Command(BaseCommand):
                         user_b = random.choice(users)
 
                     transaction = Transaction.objects.create(book=book , seller=(user_s), buyer=(user_b),
-                        date_closed=random.choice(dates), price=round(random.uniform(5.0,50.5), 1), status=random.randint(1,3))
+                        date_closed=fake.date_between(start_date='-10y', end_date='now'), price=round(random.uniform(5.0,50.5), 1), status=random.randint(1,3))
 
                     transaction.save()
             pass
