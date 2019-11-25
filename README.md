@@ -19,7 +19,7 @@ This section describes the process of setting up and running the server on a loc
 - Download and install [Python 3](https://www.python.org/downloads/) (version 3.7.4 at time of writing, make sure to get the 64-bit version if you are on 64-bit Windows). In the installer, include pip and add Python to environment variables. I also recommend selecting "Associate files with Python" for convenience.
 - Open a command line and enter `pip install virtualenvwrapper-win` to begin creating a virtual environment for Django development.
 - Run `mkvirtualenv django` to create an environment named "django" (or whatever you choose to call it). You will automatically enter the environment when creating it; in the future you can enter it with the command `workon django`.
-- Once in the environment, `pip install` django, mysqlclient, pillow, and requests.
+- Once in the environment, `pip install` django, mysqlclient, pillow, requests, and faker.
 
 ## Server Setup
 
