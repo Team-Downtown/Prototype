@@ -17,7 +17,7 @@ class Command(BaseCommand):
         last_names=['Smith','Jones','King','Wilsey','White','Bailey','Forte','Green','Blackley','North']
 
         users = []
-        for i in range(100):
+        for i in range(30):
             user_first = random.choice(first_names)
             user_last = random.choice(last_names)
             user_name  =user_first+'_'+user_last
