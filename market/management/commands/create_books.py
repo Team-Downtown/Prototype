@@ -11,7 +11,7 @@ from django.db.utils import IntegrityError
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        with open('bulk_books.csv') as csv_file:
+        with open('textbooks.csv') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             count = 0
             for row in csv_reader:
