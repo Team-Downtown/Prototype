@@ -1,19 +1,31 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+<div id="view-profile">
 
-<h3><p>Username: {{ user.username }} </p> </h3>
+<img src="https://i.ibb.co/yWVsyfw/current.jpg">
 {% if user.image %}
+	<br>
     <img src="{{ user.image.url }}" width="200">
 {% endif %}
-<p>Email: {{  user.email }}</p>
-<p>First Name: {{ user.first_name }} </p>
-<p>Last Name: {{ user.last_name }} </p>
-<p>Phone Number: {{ user.phoneNumber }}</p>
-<p>Biographical Information: {{ user.bio }}</p>
-<p><a href="{% url 'update-user' %}">Update Profile </a></p>
-<p><a href="{% url 'change-password' %}">Change Password</a></p>
+
+<h3>Username: </h3> <p> {{ user.username }} </p>
+
+<h3>Email: </h3> <p>{{  user.email }}</p>
+<h3>First Name: </h3> <p>{{ user.first_name }} </p>
+<h3>Last Name: </h3> <p>{{ user.last_name }} </p>
+<h3>Phone Number: </h3> <p>{{ user.phoneNumber }}</p>
+<h3>Biographical Information:  </h3> <p>{{ user.bio }}</p>
+<button><a href="{% url 'update-user' %}">Update Profile </a></button>
+<br>
+<br>
+<button><a href="{% url 'change-password' %}">Change Password</a></button>
+<br>
+</div>
+
 {% endblock %}
+
+
 
 
 
