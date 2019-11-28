@@ -289,18 +289,18 @@ font-size:1.2em;
             <li><a href="{% url 'my-user-messages' %}">My Messages </br>{{ user.unreadMessages}} New</a></li>
           </ul>
           <p><a href="{% url 'logout' %}">Logout</a></p>
+
+
+
+        {% if user.is_superuser %}
+          <ul><li>Admin:</li>
+              <li><a href="{% url 'filter' %}">REPORTS</a></li>
+              <li><a href="{% url 'admin:index' %}">ADMIN</a><li>
+              <li><a href="{% url 'totals' %}">TOTALS</a><li>
+          </ul>
+        {% endif %}
+
         {% else %}
-
-                  {% if user.is_superuser %}
-                  <div>
-                    <ul><li>Admin:</li>
-                        <li><a href="{% url 'filter' %}">REPORTS</a></li>
-                        <li><a href="{% url 'admin:index' %}">ADMIN</a><li>
-                        <li><a href="{% url 'totals' %}">TOTALS</a><li>
-                    </ul>
-                  </div>
-                  {% endif %}
-
 
         		    <p style="color:red; text-align:center;">You are not logged in</p>
 

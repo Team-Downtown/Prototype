@@ -116,6 +116,9 @@ class ListingDetailView(generic.DetailView):
 class BookRequestDetailView(generic.DetailView):
     model = BookRequest
 
+class TransactionDetailView(generic.DetailView):
+    model = BookRequest
+
 class UserMessageDetailView(LoginRequiredMixin,generic.DetailView):
     model = UserMessage
 
@@ -144,8 +147,7 @@ class ListingUpdate(generic.UpdateView):
 
 class TransactionListView(generic.ListView):
     model = Transaction
-    paginate_by = 10
-    template_name='market/transaction_list.html'
+
 
 def create_listing_transaction(request, id = None):
     if id is not None:

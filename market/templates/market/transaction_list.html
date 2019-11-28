@@ -1,0 +1,49 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+  <h1>Transactions</h1>
+
+{% if transaction_list %}
+{% for transaction in transaction_list %}
+  <table>
+      <tr>
+        <th>Book</th>
+        <th>Seller</th>
+        <th>Buyer</th>
+        <th>Date Closed</th>
+        <th>Price</th>
+        <th>Status</th>
+      </tr>
+
+      {% if transaction.status == 1 %}
+      <tr>
+          <td>{{ transaction.book }} </td>
+          <td> {{ transaction.seller }}</td>
+          <td>{{ transaction.buyer }}</td>
+          <td>{{ transaction.date_closed }}</td>
+          <td>{{ transaction.price }}</td>
+          <td>Book Sold on Site</td>
+      </tr>
+
+        {% elif transaction.status == 2 %}
+
+      <tr>
+          <td>{{ transaction.book }}</td>
+          <td>{{ transaction.seller }}</td>
+          <td>Buyer Unknown</td>
+          <td>{{ transaction.date_closed }}</td>
+          <td>No Price</td>
+          <td>Book Not Sold On Site</td>
+          <td>
+        </tr>
+        {% endif %}
+
+  </table>
+    {% endfor %}
+
+{% else %}
+    <p>There are no transactions in the market.</p>
+  {% endif %}
+
+{% endblock %}

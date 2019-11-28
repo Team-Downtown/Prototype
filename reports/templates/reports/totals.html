@@ -1,0 +1,46 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+  {% if user.is_superuser %}
+
+        <p></p>
+        <h1>Descriptive Statistics for Textbook Marketplace</h1>
+        <ul align=Left>
+            <br>
+            <h4>COUNTS</h4>
+            <li><strong>Users:</strong> {{ num_users }} </li>
+            <li><strong>Books:</strong> {{ num_books }}</li>
+            <li><strong>Authors:</strong> {{ num_authors }}</li>
+            <li><strong>Listings:</strong> {{ num_listings }}</li>
+            <li><strong>BookRequests:</strong> {{ num_requests }}</li>
+            <li><strong>Transactions Closed:</strong> {{ num_transactions }}</li>
+            <li><strong>Books Sold on Site:</strong> {{ num_txs1 }}</li>
+            <li><strong>Book Listings/Requests Closed, With Book Not Sold on Site:</strong> {{ num_txs2 }}</li>
+        </ul>
+
+        <p></p>
+        <ul align=Left>
+            <h4>AVERAGES</h4>
+            <li><strong>Average Number of Books Listings, Per User:</strong> {{ avg_ls_per_user}}</li>
+            <li><strong>Average Number of Book Requests, Per User:</strong> {{ avg_brs_per_user }}</li>
+            <li><strong>Average Number of Transactions, Per User:</strong> {{ avg_txs_per_user }}</li>
+            <li><strong>Average Number of Transactions Closed: Sold on Site, Per User:</strong> {{ avg_txs1_per_user }}</li>
+            <li><strong>Average Number of Transactions Closed: Not Sold on Site, Per User:</strong> {{ avg_txs2_per_user }}</li>
+        </ul>
+
+        <p></p>
+        <ul align=Left>
+            <h4>MEDIANS</h4>
+            <li><strong>Median Number of Books Listings Per User:</strong> {{ med_ls_per_user}}</li>
+            <li><strong>Median Number of Book Requests Per User:</strong> {{ med_brs_per_user }}</li>
+            <li><strong>Median Number of Transactions Per User:</strong> {{ med_txs_per_user }}</li>
+            <li><strong>Median Number of Books Sold on Site Per User:</strong> {{ med_txs1_per_user }}</li>
+            <li><strong>Median Number of Transactions Closed, but Not Sold on Site Per User:</strong> {{ med_txs2_per_user }}</li>
+        </ul>
+
+      </style>
+
+  {% endif %}
+
+{% endblock %}
