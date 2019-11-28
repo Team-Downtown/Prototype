@@ -8,9 +8,9 @@
     <li><strong>Listings:</strong> {{ num_listings }}</li>
     <li><strong>BookRequests</strong> {{ num_requests }}</li>
   </ul> -->
-  
-  
-  <div class= "home1"> 
+
+
+  <div class= "home1">
 <img src="https://i.ibb.co/ZzrgYMd/welcome.jpg" alt="pic1" border="0" style= "width:100%;"></div>
 
 
@@ -21,7 +21,7 @@
 {% for book in book_list %}
   {% if book.cover_image is not None %}
     <td style="border-right: 1px solid gray;">
-      <a href="{% url 'listings-by-book' book.isbn %}"><img src={{ book.cover_image }} /></a>
+      <a href="{% url 'listings-by-book' book.isbn %}"><img src={{ book.cover_image }}/></a>
     </td>
   {% endif %}
 {% endfor %}
@@ -30,13 +30,11 @@
 
 
 <button  ><a href="{% url 'books' %}" style="color: black;">View all books</a></button>
- 
+
 </div>
 
-</br>		
+</br>
 
 
 
 {% endblock %}
-
-

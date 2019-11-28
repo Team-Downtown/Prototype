@@ -8,7 +8,6 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.template import loader
 
-
 from . forms import CheckISBNForm, AddListingForm, AddRequestForm, ContactForm, TransactionListingForm, TransactionBookRequestForm
 from . models import Book, Author, Listing, BookRequest, UserMessage, Transaction
 
@@ -39,6 +38,7 @@ def index(request):
 class BookListView(generic.ListView):
     model = Book
     paginate_by = 10
+    ordering = ['title']
 
 
 class AuthorListView(generic.ListView):
@@ -52,7 +52,6 @@ class ListingListView(generic.ListView):
 
     def get_queryset(self):
         return Listing.objects.filter(transaction = None)
-
 
 class BookRequestListView(generic.ListView):
     model = BookRequest
@@ -142,6 +141,11 @@ class ListingUpdate(generic.UpdateView):
     template_name_suffix = '_update_form'
     fields = ('price','condition','comment')
     success_url = '/marketplace/mylistings/'
+
+class TransactionListView(generic.ListView):
+    model = Transaction
+    paginate_by = 10
+    template_name='market/transaction_list.html'
 
 def create_listing_transaction(request, id = None):
     if id is not None:

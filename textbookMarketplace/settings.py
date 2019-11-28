@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'market',
     'reports',
+    'import_export',
 ]
 
 AUTH_USER_MODEL = 'users.MarketUser'

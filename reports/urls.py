@@ -3,12 +3,11 @@ from django.contrib.auth.decorators import permission_required
 from . import views
 
 urlpatterns = [
-    path('create_report/', views.CreateReportView.as_view(), name='create-report'),
-    path('user_report/',views.UserReportView.as_view(), name='user-report'),
-    path('listing_report/',views.ListingReportView.as_view(), name='listing-report'),
-    path('bookrequest_report/',views.BookRequestReportView.as_view(), name='bookrequest-report'),
-    path('transaction_report/',views.TransactionReportView.as_view(), name='transaction-report'),
-    path('transaction_yes_report/',views.TransactionReportView.as_view(), name='transaction-yes-report'),
-    path('transaction_no_report/',views.TransactionReportView.as_view(), name='transaction-no-report'),
-
+    #path('report/',views.BookRequestSearchResultView.as_view(), name='request_searchresults'),
+    path('filter/', views.FilteredTemplateView.as_view(), name='filter'),
+    path('totals', views.totals, name='totals'),
+    path('requests_by_date/', views.BookRequestFilteredView.as_view(), name='requests-by-date'),
+    path('listings_by_date/', views.ListingFilteredView.as_view(), name='listings-by-date'),
+    # path('users_by_date/', views.MarketUserFilteredView.as_view(), name='marketusers-by-date'),
+    path('transactions_by_date/', views.TransactionFilteredView.as_view(), name='transactions-by-date'),
 ]
