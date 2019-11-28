@@ -13,6 +13,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> fa9189a54879ee7fa31eaa7faf0d605162d5a0aa
         # Create some test users
         first_names=['John','Chris','Tom','Jack','Alex','Andrew','David', 'Michael','George','Harry','Sally','Lucy','Sophie','Amy','Carrie','Mary','Jennifer','Caroline','Nancy','Ava']
         last_names=['Smith','Jones','King','Wilsey','White','Bailey','Forte','Green','Blackley','North']
