@@ -40,15 +40,13 @@ class Book(models.Model):
 
     display_author.short_description = 'Author'
 
-<<<<<<< HEAD
-=======
     def count_open_listings(self):
         return self.listing_set.filter(transaction=None).count()
 
     def count_open_bookrequests(self):
         return self.bookrequest_set.filter(transaction=None).count()
 
->>>>>>> fa9189a54879ee7fa31eaa7faf0d605162d5a0aa
+
     @classmethod
     def add_if_not_present(cls, isbn):
         """Retrieve information from Google Books, add it to the database if necessary, and return the book.
