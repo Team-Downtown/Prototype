@@ -85,9 +85,9 @@ WSGI_APPLICATION = 'textbookMarketplace.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nlbdb1',
-        'USER': 'nlburns@localhost',
-        'PASSWORD': '919Wloam@m',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
 		'OPTIONS': {
