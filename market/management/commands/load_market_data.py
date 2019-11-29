@@ -23,12 +23,7 @@ class Command(BaseCommand):
                 isbn = row["ISBN"].strip()
                 Book.add_if_not_present(isbn)
 
-        superuser = MarketUser.objects.create_superuser(
-            username='textbook',
-            email='textbook@mail.com',
-            password='capstone')
 
-        superuser.save()
 
         # Create some test users
         users = []
