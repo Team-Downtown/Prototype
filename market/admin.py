@@ -71,8 +71,8 @@ class TransactionAdmin(ExportMixinAdmin):
 
 admin.site.register(Transaction, TransactionAdmin)
 
-#class UserMessageAdmin(admin.ModelAdmin):
-class UserMessageAdmin(ExportMixinAdmin):
+class UserMessageAdmin(admin.ModelAdmin):
+# class UserMessageAdmin(ExportMixinAdmin):
     list_display = ('sender','receiver','date','msg', 'listing_id', 'request_id')
     fields = ['sender','receiver','date','msg', 'listing_id', 'request_id']
 
