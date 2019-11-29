@@ -2,7 +2,6 @@ import csv
 from users.models import MarketUser
 from market.models import Listing, BookRequest, Transaction
 import numpy as np
-from scipy import stats
 from django.shortcuts import render, HttpResponse
 
 def stats_func(item):
@@ -21,7 +20,6 @@ def stats_func(item):
 
     # Average, Mode, Median Counts of Items per user
     avg_count_items_per_user = np.mean(user_counts)
-    mode_count_items_per_user = stats.mode(user_counts)
     median_count_items_per_user = np.median(user_counts)
 
     return count, avg_count_items_per_user, median_count_items_per_user
