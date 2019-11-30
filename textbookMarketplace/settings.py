@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 # Application definition
 
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'market',
+    'reports',
+    'import_export',
 ]
 
 AUTH_USER_MODEL = 'users.MarketUser'
@@ -82,9 +85,9 @@ WSGI_APPLICATION = 'textbookMarketplace.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'marketplace',
-        'USER': 'dbuser',
-        'PASSWORD': 'password',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
 		'OPTIONS': {

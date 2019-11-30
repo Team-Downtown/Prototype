@@ -7,5 +7,6 @@ urlpatterns = [
     path('view/',views.view_user_info, name='view-user'),
     path('update/',views.update_user, name = 'update-user'),
     path('change-password/', views.change_password_view, name='change-password'),
+    path('users/',views.UserListView.as_view(), name='user-list'),
 
 ]

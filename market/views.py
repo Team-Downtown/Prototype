@@ -1,10 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, FileResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from django.db.models import Q
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.template import loader
 
 from . forms import CheckISBNForm, AddListingForm, AddRequestForm, ContactForm, TransactionListingForm, TransactionBookRequestForm
 from . models import Book, Author, Listing, BookRequest, UserMessage, Transaction
@@ -50,7 +52,6 @@ class ListingListView(generic.ListView):
 
     def get_queryset(self):
         return Listing.objects.filter(transaction = None)
-
 
 class BookRequestListView(generic.ListView):
     model = BookRequest
@@ -115,6 +116,9 @@ class ListingDetailView(generic.DetailView):
 class BookRequestDetailView(generic.DetailView):
     model = BookRequest
 
+class TransactionDetailView(generic.DetailView):
+    model = BookRequest
+
 class UserMessageDetailView(LoginRequiredMixin,generic.DetailView):
     model = UserMessage
 
@@ -140,6 +144,10 @@ class ListingUpdate(generic.UpdateView):
     template_name_suffix = '_update_form'
     fields = ('price','condition','comment')
     success_url = '/marketplace/mylistings/'
+
+class TransactionListView(generic.ListView):
+    model = Transaction
+
 
 def create_listing_transaction(request, id = None):
     if id is not None:

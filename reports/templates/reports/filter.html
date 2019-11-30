@@ -1,0 +1,77 @@
+{% extends "base_generic.html" %}
+
+<!DOCTYPE html>
+
+{% block sidebar %}
+{% if user.is_superuser %}
+  <ul><li>Admin:</li>
+      <li><a href="{% url 'filter' %}">REPORTS</a></li>
+      <li><a href="{% url 'admin:index' %}">ADMIN</a><li>
+      <li><a href="{% url 'totals' %}">TOTALS</a><li>
+  </ul>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+    <html lang="en">
+    <head>
+      <h1>REPORTS</h1>
+      <div class="search-border">
+        <h4 align=Center>
+        <br><br> To display common item site statistics, click TOTALS in sidebar.
+        <br><br> To download all data for a common item, click ADMIN in sidebar, click on the item, then click the grey export button on top right.
+        <br><br>Use the form below to display items within a specific date range.
+         <h4>
+      </div>
+
+<div class="search-border">
+
+  <h1>BOOK LISTINGS</h1>
+  <form action="{% url 'listings-by-date' %}" method="get">
+    <br>
+    <h4>Display Listings Created Between<br>
+      <input name="start_date" type="date">
+      &amp;
+      <input name="end_date" type="date">
+      <br><br></h4>
+      <input type="submit" value="OK">
+
+  </form>
+
+</div>
+
+<div class="search-border">
+
+  <h1>BOOK REQUESTS</h1>
+  <form action="{% url 'requests-by-date' %}" method="get">
+    <br><h4>
+    Display Requests Created Between
+      <br>
+      <input name="start_date" type="date">
+      &amp;
+      <input name="end_date" type="date">
+      <br><br><h4>
+      <input type="submit" value="OK">
+
+  </form>
+
+</div>
+
+<div class="search-border">
+
+  <h1>TRANSACTIONS</h1>
+  <form action="{% url 'transactions-by-date' %}" method="get">
+    <br>
+    <h4>Display Transactions Closed Between
+      <br>
+      <input name="start_date" type="date">
+      &amp;
+      <input name="end_date" type="date">
+      <br><br></h4>
+      <input type="submit" value="OK">
+
+  </form>
+
+</div>
+
+{% endblock %}

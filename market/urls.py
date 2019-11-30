@@ -1,8 +1,9 @@
 from django.urls import path, include
 from . import views
+from django.contrib.auth.decorators import permission_required
 
 urlpatterns = [
-    path('', views.index, name='index'), 
+    path('', views.index, name='index'),
     path('books/',views.BookListView.as_view(), name='books'),
     path('authors/',views.AuthorListView.as_view(), name='authors'),
     path('listings/',views.ListingListView.as_view(), name='listings'),
@@ -28,4 +29,6 @@ urlpatterns = [
     path('mylistings/update/<int:pk>',views.ListingUpdate.as_view(), name='update-listing'),
     path('mylistings/transaction/<int:id>',views.create_listing_transaction, name='create-listing-transaction'),
     path('myrequests/transaction/<int:id>',views.create_bookrequest_transaction, name='create-request-transaction'),
+    path('transactions/', permission_required(views.TransactionListView.as_view()), name='transactions'),
+    # path('transactions/', permission_required('market.transaction'), views.TransactionListView.as_view(), name='transactions'),
 ]
