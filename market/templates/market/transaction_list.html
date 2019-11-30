@@ -5,7 +5,6 @@
   <h1>Transactions</h1>
 
 {% if transaction_list %}
-{% for transaction in transaction_list %}
   <table>
       <tr>
         <th>Book</th>
@@ -15,6 +14,8 @@
         <th>Price</th>
         <th>Status</th>
       </tr>
+{% for transaction in transaction_list %}
+
 
       {% if transaction.status == 1 %}
       <tr>
@@ -39,8 +40,9 @@
         </tr>
         {% endif %}
 
-  </table>
+
     {% endfor %}
+        </table>
 
 {% else %}
     <p>There are no transactions in the market.</p>

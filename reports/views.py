@@ -116,5 +116,5 @@ class ListingFilteredView(generic.ListView):
     def get_queryset(self):
         start = self.request.GET.get('start_date')
         end = self.request.GET.get('end_date')
-        filt_ls = BookListing.objects.filter(Q(date_created__range=[start, end])).all()
+        filt_ls = Listing.objects.filter(Q(date_created__range=[start, end])).all()
         return filt_ls
