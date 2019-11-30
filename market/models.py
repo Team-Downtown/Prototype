@@ -1,6 +1,6 @@
-from django.db import models
-import uuid # Required for unique listing instances
+from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.db import models
 from django.utils import timezone
 import requests
 
@@ -58,7 +58,7 @@ class Book(models.Model):
             return books[0]
         else:
             response = requests.get('https://www.googleapis.com/books/v1/volumes', params={
-                'key': 'AIzaSyBqBgY6u3k6j-UaMtmoOPL0PHAf4pglw3I',
+                'key': settings.GOOGLE_BOOKS_API_KEY,
                 'q': 'isbn:' + isbn,
             })
 
@@ -102,7 +102,6 @@ class Book(models.Model):
 
 class Listing(models.Model):
 
-    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular book across whole library')
     book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, null=True)
 
@@ -129,7 +128,6 @@ class Listing(models.Model):
 
 class BookRequest(models.Model):
 
-    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular request across whole library')
     book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL, null=True)
 
