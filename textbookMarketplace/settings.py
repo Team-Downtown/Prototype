@@ -28,7 +28,7 @@ SECRET_KEY = env.str('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = []
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
